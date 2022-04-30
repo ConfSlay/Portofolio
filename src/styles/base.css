@@ -1,0 +1,379 @@
+@charset "UTF-8";
+
+html {  /* pour determiner une police par défaut de la page*/
+  font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;
+  font-weight: 500;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#particles-js{
+  width: 100%;
+  height: 100%;
+  position: fixed; 
+  z-index: -10; 
+  top: 0; 
+  left: 0; 
+  background : rgba(24, 24, 24, 1);
+}
+
+.Header {
+  display: flex;
+  position: fixed;
+  left : 0px;
+  width: 100%;/* 1 viewport width unit = 1% veiwport width */
+  Top: 0px;  
+  background: rgba(33,33,33,1);
+  z-index : 30;
+  border-bottom: 1px solid rgb(50,50,50);
+}
+
+.Header a {
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.leftBox {
+  display: flex;
+  align-self: center;
+  align-items: center;
+  flex-direction: row;   
+  width: max-content; 
+}
+
+.imageHeader {
+  animation: lightning 10s; /* Start the shake animation and make the animation last for x seconds  */
+  animation-iteration-count: infinite; /* When the animation is finished, start again */ 
+}
+
+    /*
+    background: linear-gradient(90deg, rgba(140,136,148,1) 5%, rgba(247,239,239,1) 85%);
+    text-shadow: none;
+    background-clip: text;
+    text-decoration: none;
+    color: transparent;*/
+
+  /*text-decoration: none;
+  color: transparent;  
+  text-shadow: none;
+  background: linear-gradient(90deg, rgba(224,67,132,1) 0%, rgba(92,90,213,1) 80%);
+  background-clip: text;*/
+
+.titleHeader-top{
+  position: relative;
+  background: linear-gradient(90deg, rgba(140,136,148,1) 5%, rgba(247,239,239,1) 85%);
+  text-shadow: none;
+  background-clip: text;
+  text-decoration: none;
+  color: transparent;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.hiding-titleHeader-bot{
+  position: relative;
+  background: rgba(33,33,33,1);
+  color: transparent;
+  z-index: 999;
+}
+
+.titleHeader-bot{
+  position: relative;
+  background: linear-gradient(90deg, rgba(140,136,148,1) 5%, rgba(247,239,239,1) 85%);
+  text-shadow: none;
+  background-clip: text;
+  text-decoration: none;
+  color: transparent;
+  overflow: hidden;
+  line-height: 0vw;
+  z-index: 998;
+}
+
+.logoutBubble {
+  position: fixed;
+  z-index: 20;
+  background: rgba(232, 16, 41, 0.8);
+  color : white; 
+  cursor : pointer;
+  text-decoration: none;
+}
+
+.logoutBubble:hover {
+  background-color: rgba(60,60,60,1);
+  /*background: linear-gradient(0deg, rgba(140,136,148,1) 5%, rgba(247,239,239,1) 85%);*/
+  color: red; 
+}
+
+
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------DESKTOP----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+@media (orientation: landscape) {
+  .Header {
+    height: 5vw; /* 1 viewport width unit = 1% veiwport width */
+  }
+
+  .Header a:hover {
+    background: rgba(60,60,60,1);
+    transition-duration: 500ms;
+    text-shadow: none;
+    color : white;
+    padding: 0.1vw 1vw;
+    border-radius: 1vw;
+  }
+
+/*s'applique à tous les enfants de classe titleHeader contenu dans un [a] (pendant hover), 
+lui même appartenant étant un élément [div] enfant d'un élément de classe titleHeader */
+  .Header a:hover > .titleHeader > div{ 
+    color: rgb(240,240,240);
+    text-shadow:
+      -1px -1px 0 rgb(92,90,213),
+      1px -1px 0 rgb(224,67,132),
+      -1px 1px 0 rgb(92,90,213),
+      1px 1px 0 rgb(224,67,132);
+  }
+
+  .Header a:hover > .titleHeader > .hiding-titleHeader-bot{ 
+    text-shadow:none;
+    color: transparent;
+    background: rgba(60,60,60,1);
+    transition-duration: 500ms;
+  }
+
+  .Header a {
+    transition-duration: 500ms; /* hover off */
+  }
+
+  .leftBox {
+    height: 4vw; 
+    margin-left: 1vw;
+  }
+
+  .titleHeader{
+    height: 2.5vw;
+    padding-left: 1vw; 
+  }
+
+  .titleHeader > div {
+    font-size: 2.5vw;/* 1 viewport width unit = 1% veiwport width */
+    letter-spacing: 0.25vw;
+    word-spacing:0.25vw;
+  }
+
+  .titleHeader-top{
+    height:  1.25vw;
+    line-height: 2.5vw;
+
+    animation: top_anim 10s; /* Start the shake animation and make the animation last for x seconds  */
+    animation-iteration-count: infinite; /* When the animation is finished, start again */ 
+    animation-timing-function: linear;
+  }
+
+  .hiding-titleHeader-bot{
+    top: -1.25vw;
+    height:  1.25vw;
+    transition-duration: 500ms;
+  }
+
+  .titleHeader-bot{
+    top: -1.25vw;
+    height:  1.25vw;
+    line-height: 0vw;
+
+    animation: bot_anim 10s; /* Start the shake animation and make the animation last for x seconds  */
+    animation-iteration-count: infinite; /* When the animation is finished, start again */ 
+    animation-timing-function: linear;
+  }
+
+  .imageHeader {
+    width: 3.5vw;/* 1 viewport width unit = 1% veiwport width */
+    height: 3.5vw;/* 1 viewport width unit = 1% veiwport width */
+  }
+
+  .linksBox{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;   
+    height: 5vw;
+    width: max-content;
+  }
+
+  .itemLinksBox{
+    color: rgba(150,150,150,1);
+    font-size: 2vw;/* 1 viewport width unit = 1% veiwport width */
+    letter-spacing: 0.2vw;
+    margin-right: 3vw;
+  }
+
+  .itemLinksBox:hover{
+    text-shadow:
+      -1px -1px 0 rgb(92,90,213),
+      1px -1px 0 rgb(224,67,132),
+      -1px 1px 0 rgb(92,90,213),
+      1px 1px 0 rgb(224,67,132) !important; /* to override the big header rule for <a> node */
+  }
+
+  .iconMenuBox{
+    display: none;
+  }
+
+  .burgerMenuBox {
+    display: none;
+  }
+
+  .logoutBubble {
+    bottom: 1vw;
+    left: 1vw;
+    font-size: 1.5vw;
+    padding: 0.5vw;
+    border-radius: 1vw;
+  }
+
+}
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------MOBILE-----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+@media (orientation: Portrait) {
+  .Header {
+    height: 15vw;/* 1 viewport height unit = 1% veiwport height */
+  }
+
+  .leftBox {   
+    height: 15vw; 
+  }  
+
+  .titleHeader{
+    height: 5vw;
+    padding-left: 2vw; 
+  }
+  
+  .titleHeader > div {
+    font-size: 5vw;/* 1 viewport width unit = 1% veiwport width */
+    letter-spacing: 0.2vw;
+    word-spacing:0.5vw;
+  
+  }
+
+  .titleHeader-top{
+    height:  2.5vw;
+    line-height: 5vw;
+
+    animation: top_anim-mobile 10s; /* Start the shake animation and make the animation last for x seconds  */
+    animation-iteration-count: infinite; /* When the animation is finished, start again */ 
+    animation-timing-function: linear;    
+  }
+
+  .hiding-titleHeader-bot{
+    top: -2.5vw;
+    height:  2.5vw;
+  }
+
+  .titleHeader-bot{
+    top: -2.5vw;
+    height:  2.5vw;
+    line-height: 0vw;
+
+    animation: bot_anim-mobile 10s; /* Start the shake animation and make the animation last for x seconds  */
+    animation-iteration-count: infinite; /* When the animation is finished, start again */ 
+    animation-timing-function: linear;            
+  }
+
+  .imageHeader {
+    padding-left: 2vw;
+    width: 8vw;
+    height: 8vw;
+  }
+
+  .linksBox {
+    display: none;
+  }
+
+
+  /*--------ICON MENU BURGER-------------*/
+
+  .iconMenuBox{
+    margin-left: auto;
+    align-self: center;
+    padding-right: 4vw;
+    height: 8.25vw;
+  }
+
+  .icon-1, .icon-2, .icon-3 {
+    width: 10vw;
+    height: 0.75vw;
+    background-color: rgba(150,150,150,1);
+    transition: all 1000ms cubic-bezier(0.84, 0.06, 0.52, 1.8);
+        
+  }
+
+  .icon-1 {
+    position: relative;
+    top: 0vw;
+  }
+
+  .icon-2 {
+    position: relative;
+    top: 2.75vw;
+  }
+
+  .icon-3 {
+    position: relative;
+    top: 5.5vw;
+  }
+
+  .icon-1.a {
+    transform: translateY(1.5vw);
+    transform: rotatez(47deg);
+    transform-origin: left;
+
+    
+  }
+
+  .icon-3.b {
+    transform: translateY(-1.5vw);
+    transform: rotatez(-47deg);
+    transform-origin: left;
+  }
+
+  .icon-2.c {
+    opacity: 0;
+  }
+
+
+
+/*--------NAV MENU BURGER-------------*/
+
+  .burgerMenuBox{
+    position: absolute;
+    top: 15vw;
+    right: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;   
+    height: max-content;
+    width: max-content;
+    background-color : rgba(33,33,33,0.9);
+    border-left: 1px solid rgb(50,50,50);
+    visibility: hidden;
+  }
+
+  .itemBugerMenuBox{
+    width: 36vw;/* 1 viewport height unit = 1% veiwport height */
+    height: 8vw;/* 1 viewport height unit = 1% veiwport height */
+    font-size: 6vw;
+    text-align: center;
+    text-decoration: none;
+    padding: 1vw 0vw;
+    color: rgba(150,150,150,1);
+    border-bottom: 1px solid rgb(50,50,50);
+  }
+
+  .logoutBubble {
+    bottom: 2vw;
+    left: 2vw;
+    font-size: 3vw;
+    padding: 1vw;
+    border-radius: 2vw;
+  }
+}

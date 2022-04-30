@@ -1,0 +1,155 @@
+.wrapper-discover {
+  position : relative; 
+  display: grid; /* ceci est une grille */
+  grid-template-columns: 1fr; /* 1 colonne qui occupe tout l'espace disponible */
+  justify-items: center; /* les enfants sont centrés verticalement */
+  grid-auto-flow: column; /* les enfants sont placés au fur et à mesure dans la colonne */
+  grid-auto-rows: auto;
+}
+
+.box-discover{ /* flexbox */
+  display: flex;
+  flex-direction: column;
+  grid-column: 1;
+  grid-row: auto;
+  border-radius: 20px;
+}
+
+.item-discover{ /* flexbox's childs */
+  text-align: center;
+}
+
+.title-discover{
+  text-align: center;
+  color : white;
+}
+
+.tag-discover{
+  text-align: center;
+  color : grey;
+}
+
+.description-discover{
+  text-align : justify;
+  color : white;
+}
+
+.button-discover{
+  align-self: center;
+  font-family: 'Century Gothic';
+  z-index: 10;
+  border: 1px solid rgb(50,50,50);
+  color : white;
+  background-color: rgba(60,60,60,1);
+}
+
+.button-discover:hover{ 
+  background-color: rgba(80,80,80,1);
+  color: black; 
+  cursor: pointer;
+}
+
+.image-discover{
+  align-self: center;
+}
+
+
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------DESKTOP----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+@media (orientation: landscape) {
+
+  .wrapper-discover { /* grid */
+    top : 6vw;
+    grid-row-gap: 2vw;
+    padding-bottom: 2vw; 
+  }
+
+  .box-discover{ /* flexbox */
+    padding: 1vw 2vw; /* 1 top/bot 2 left/right */
+  }
+
+  .item-discover{ /* flexbox's childs */
+    margin-bottom: 1vw;
+    margin-top: 1vw;
+  }
+
+  .title-discover{
+    font-size: 2vw;
+    letter-spacing: 0.2vw;
+  }
+
+  .tag-discover{
+    font-size: 1.5vw;
+    word-spacing: 0.5vw;
+  }
+
+  .description-discover{
+    font-size: 1.25vw;
+    word-spacing: 0.1vw;
+    margin-bottom: 1vw;
+    width: 80vw;
+  }
+
+  .image-discover{
+    width: 60vw;
+    border-radius: 1vw;
+  }
+
+  .button-discover{
+    font-size: 2vw;
+    margin-top: 1vw;
+    word-spacing: 0.3vw;
+    padding: 0.5vw;
+    border-radius: 1vw;
+  }
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------MOBILE-----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+@media (orientation: Portrait) {
+
+  .wrapper-discover { /* grid */
+    top : 15vw;
+    grid-row-gap: 4vw;
+    padding-bottom: 4vw;
+  }
+
+  .box-discover{ /* flexbox */
+    padding: 2vw 4vw; /* 2 top/bot 4 left/right */
+  }
+
+  .item-discover{ /* flexbox's childs */
+    margin-bottom: 2vw;
+    margin-top: 2vw;
+  }
+
+  .title-discover{
+    font-size: 6vw;
+    letter-spacing: 0.1vw;
+  }
+
+  .tag-discover{
+    font-size: 3vw;
+    word-spacing: 1vw;
+  }
+
+  .description-discover{
+    font-size: 3vw;
+    word-spacing: 0.1vw;
+  }
+
+  .image-discover{
+    width: 80vw;
+    border-radius: 1vw;
+  }
+
+  .button-discover{
+    font-size: 4vw;
+    word-spacing: 0.4vw;
+    margin-top: 2vw;
+    padding: 1vw;
+    border-radius: 2vw;
+  }
+}

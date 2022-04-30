@@ -1,0 +1,50 @@
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------DESKTOP----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+
+@media (orientation: landscape){
+	#swal2-title{
+		font-family: 'Century Gothic'!important;
+		font-weight: normal !important;
+		/*font-size: 2vw !important;
+		word-spacing : 0.2vw !important; */
+	}
+
+	.swal2-styled.swal2-confirm{
+		font-family: 'Century Gothic'!important;
+		/*font-size: 1.5vw !important;
+		word-spacing : 0.15vw !important; */
+	}
+
+	.swal2-styled.swal2-cancel{
+		font-family: 'Century Gothic'!important;
+		/*font-size: 1.5vw !important;
+		word-spacing : 0.15vw !important;*/ 
+
+	}
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------MOBILE-----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+
+@media (orientation: Portrait){
+	#swal2-title{
+		font-family: 'Century Gothic'!important;
+		font-weight: normal !important;
+		/*font-size: 4vw !important;
+		word-spacing : 0.4vw !important; */
+	}
+
+	.swal2-styled.swal2-confirm{
+		font-family: 'Century Gothic'!important;
+		/*font-size: 3vw !important;
+		word-spacing : 0.3vw !important; */
+	}
+
+	.swal2-styled.swal2-cancel{
+		font-family: 'Century Gothic'!important;
+		/*font-size: 3vw !important;
+		word-spacing : 0.3vw !important; */
+	}
+}

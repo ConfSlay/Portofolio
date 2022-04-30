@@ -1,0 +1,238 @@
+.wrapper-form {
+  position : relative; 
+  display: grid; /* ceci est une grille */
+  grid-template-columns: 1fr; /* 1 colonne qui occupe tout l'espace disponible */
+  justify-items: center; /* les enfants sont centrés verticalement */
+  grid-auto-flow: column; /* les enfants sont placés au fur et à mesure dans la colonne */
+  grid-auto-rows: auto;
+}
+
+.box-form{ /* flexbox */
+  display: flex;
+  flex-direction: column;
+  grid-column: 1;
+  grid-row: auto;
+  background-color: rgba(33,33,33,1);
+  border: 1px solid rgb(50,50,50);
+  border-radius: 20px;
+}
+
+.item-form{ /* flexbox's childs */
+  text-align: center;
+}
+
+.label-form{
+  text-align: center;
+  top :0vw;
+  color : white;
+  z-index: 10;
+}
+
+.textNeeded-form{
+  color:  red;
+}
+
+.textFields-form{
+  font-family: 'Century Gothic';
+  z-index: 10;
+  color: black;
+  border: 1px solid rgb(55,55,55);
+}
+
+
+.textArea-form{
+  resize: none;
+  font-family: 'Century Gothic';
+  z-index: 10;
+  color: black;
+  background-color: white;
+}
+
+
+.textArea-form:valid {
+  border: 1px solid rgb(55,55,55);
+}
+
+.button-form{
+  align-self: center;
+  font-family: 'Century Gothic';
+  text-decoration: none;
+  z-index: 10;
+  border: 1px solid rgb(50,50,50);
+  color : white;
+  background-color: rgba(60,60,60,1);
+}
+
+.button-form:hover{ 
+  background-color: rgba(80,80,80,1);
+  border: none;
+  color: white; 
+  cursor: pointer;
+}
+
+select {
+  font-family: inherit;
+  background-color: rgba(60,60,60,1);
+  color: white;
+  border : none;
+}
+
+input[type=file]::file-selector-button { /* select le bouton file upload */
+  background-color: rgba(60,60,60,1);
+  border: 1px solid rgb(50,50,50);
+  color: white;
+  font-family: 'Century Gothic';
+}
+
+input[type='file'] { /* select le message à côté*/
+  color:white;
+  font-family: 'Century Gothic';
+}
+
+.file-box{
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  margin: auto;
+}
+
+.file-name {
+  color : white;
+}
+
+
+
+
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------DESKTOP----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+@media (orientation: landscape) {
+
+  .wrapper-form { /* grid */
+    top : 8vw;
+    grid-row-gap: 2vw;
+    padding-bottom: 2vw; 
+  }
+
+  .box-form{ /* flexbox */
+    padding: 1vw 2vw; /* 1 top/bot 2 left/right */
+  }
+
+  .item-form{ /* flexbox's childs */
+    margin-bottom: 1vw;
+    margin-top: 1vw;
+  }
+
+  .label-form{
+    font-size: 2vw;
+    word-spacing: 0.2vw;
+  }
+
+  .textFields-form{
+    top :3vw;
+    width: 30vw;
+    font-size: 1vw; /* 1 viewport min between width and height unit = 1% veiwport min */
+    word-spacing: 0.1vw;
+  }
+
+  .small{
+    width: 20vw;
+  }
+
+  .textArea-form{
+    font-size: 1vw;
+    word-spacing: 0.1vw;
+    width: 30vw;
+    height: 10vw;
+  }
+
+  input[type='file'] { /* select le message à côté*/
+    font-size: 1vw;
+    word-spacing: 0.1vw;
+  }
+
+  .button-form{
+    font-size: 2vw;
+    margin-top: 1vw;
+    word-spacing: 0.3vw;
+    padding: 0.5vw;
+    border-radius: 1vw;
+  }
+
+  .icon-delete{
+    padding-right: 1vw;
+    height: 1.25vw;
+  }
+
+  .file-name {
+    font-size :1vw;
+  }
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------MOBILE-----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+@media (orientation: Portrait) {
+
+  .wrapper-form { /* grid */
+    top : 25vw;
+    grid-row-gap: 4vw;
+    padding-bottom: 4vw;
+  }
+
+  .box-form{ /* flexbox */
+    padding: 2vw 4vw; /* 2 top/bot 4 left/right */
+  }
+
+  .item-form{ /* flexbox's childs */
+    margin-bottom: 2vw;
+    margin-top: 2vw;
+  }
+
+  .label-form{ 
+    font-size: 4vw;
+    word-spacing: 0.4vw;
+  }
+
+  .textFields-form{
+    top :6vw;
+    width: 60vw;
+    font-size: 2vw; /* 1 viewport min between width and height unit = 1% veiwport min */
+    word-spacing: 0.2vw;
+  }
+
+  .small{
+    width: 40vw;
+  }
+
+
+  .textArea-form{
+    font-size: 2vw;
+    word-spacing: 0.2vw;
+    width: 60vw;
+    height: 20vw;
+  }
+
+  input[type='file'] { /* select le message à côté*/
+    font-size: 2vw;
+    word-spacing: 0.2vw;
+
+  }
+
+  .button-form{
+    font-size: 4vw;
+    word-spacing: 0.4vw;
+    margin-top: 2vw;
+    padding: 1vw;
+    border-radius: 2vw;
+  }
+
+  .icon-delete{
+    padding-right: 2vw;
+    height: 2.5vw;
+  }
+
+  .file-name {
+    font-size :2vw;
+  }
+}

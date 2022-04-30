@@ -1,0 +1,81 @@
+@keyframes lightning{
+  1.5625%{opacity: 1}
+  3.125%{opacity :0}
+  4.6875%{opacity:  1}
+  75%{opacity: 1}
+  0%,100%{opacity: 0}
+}
+
+.shake{
+  transition : 500ms;
+}
+.shake:hover {  
+  animation: shake 0.5s; /* Start the shake animation and make the animation last for x seconds  */
+  animation-iteration-count: infinite; /* When the animation is finished, start again */ 
+}
+
+@keyframes shake{
+  50%{transform:translate(0, -0.5vw) rotate(0deg)}
+  0%,100%{transform:translate(0, 0) rotate(0)}
+}
+
+
+.appearing {
+  animation:  appearing 1s;
+  visibility: visible !important;
+}
+
+@keyframes appearing{
+  0%{opacity: 0;}
+  100%{opacity: 1;}
+}
+
+.disappearing{
+  animation:  disappearing 1s; 
+  animation-fill-mode:forwards; /* pour que l'element reste à l'état final */
+  visibility: visible !important;
+}
+
+@keyframes disappearing{
+  0%{opacity: 1;}
+  100%{opacity: 0;visibility: hidden;} 
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------DESKTOP----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+  @keyframes top_anim{
+    0.001%{opacity: 1;line-height: 5vw;transform: translate(0px,0vw);}
+    /* pour corriger l'incompréhensible décalage d'1 pixel entre le haut et le bas */
+    10%{opacity:  1;line-height: 2.5vw;}
+    75%{opacity: 1}
+    0%,100%{opacity: 0;transform: translate(0px,0vw);}
+    /* pour corriger l'incompréhensible décalage d'1 pixel entre le haut et le bas */
+  }
+
+  @keyframes bot_anim{
+    0.001%{opacity: 1;transform: translate(0px,-1.25vw);}
+    10%{opacity:  1;transform: translate(0px,0vw);}
+    75%{opacity: 1}
+    0%,100%{opacity: 0}
+  }
+
+
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------MOBILE-----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+  @keyframes top_anim-mobile{
+    0.001%{opacity: 1;line-height: 10vw;transform: translate(0px,0vw);} 
+    /* pour corriger l'incompréhensible décalage d'1 pixel entre le haut et le bas */
+    10%{opacity:  1;line-height: 5vw;}
+    75%{opacity: 1}
+    0%,100%{opacity: 0;transform: translate(0px,0vw);}
+    /* pour corriger l'incompréhensible décalage d'1 pixel entre le haut et le bas */
+  }
+
+  @keyframes bot_anim-mobile{
+    0.001%{opacity: 1;transform: translate(0px,-2.5vw);}
+    10%{opacity:  1;transform: translate(0px,0vw);}
+    75%{opacity: 1}
+    0%,100%{opacity: 0}
+  }

@@ -1,0 +1,210 @@
+.wrapper-project {
+  position : relative; 
+  display: grid; /* ceci est une grille */
+  justify-items: center; /* les enfants sont centrés verticalement */
+}
+
+.item-project{
+  display: flex;
+  justify-items: center;
+  flex-direction : column;
+  grid-row: auto;
+  background-color: rgba(33,33,33,1);
+  border: 1px solid rgb(50,50,50);
+}
+
+.buttons-project{
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  width: fit-content;
+}
+
+.buttons-project > button {
+  font-family: none;
+  font-family: inherit;
+  cursor: pointer;
+  border: none !important; /* vu que c'est un bouton */
+  color : white;
+  text-decoration: none;
+  text-align: center;
+  align-self: center;
+  width: fit-content;
+  background-color: rgba(60,60,60,1);
+}
+
+.updateProjectButton-project:hover{
+  background-color: rgba(80,80,80,1);
+}
+
+.deleteProjectButton-project:hover{
+  background-color: rgba(232, 16, 41, 0.8);
+}
+
+.title-project{
+  text-align: center;
+  color : white;
+}
+
+.tag-project{
+  text-align: center;
+  color : grey;
+}
+
+.image-project{
+  margin: auto;
+  align-self: center;
+}
+
+
+
+.link-project{
+  text-decoration: none;
+  color : white;
+  background-color: rgba(60,60,60,1);
+  align-self: center;
+  width: fit-content;
+}
+
+.link-project:hover{
+  background-color: rgba(80,80,80,1);
+  color: white;
+  cursor: pointer;  
+}
+
+.buttonAdd-project{
+  grid-column: 1/3;
+  font-family: 'Century Gothic';
+  color: white;
+  text-decoration: none;
+  background-color: rgba(60,60,60,1);
+}
+
+.buttonAdd-project:hover {
+  background-color: rgba(80,80,80,1);
+  color: white;
+  cursor: pointer;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------DESKTOP----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+@media (orientation: landscape) {
+
+  .wrapper-project {
+    top : 8vw;
+    grid-auto-rows: auto;
+    grid-template-columns: 1fr 1fr; /* 2 colonnes qui occupe tout l'espace disponible */  
+    grid-auto-flow: row; /* les enfants sont placés au fur et à mesure dans la colonne */
+  }
+
+  .item-project{
+    grid-column: auto;
+    padding : 2vw;
+    width: 40vw;
+    border-radius: 10px;
+    margin-bottom: 5vw;
+  }
+
+
+  .buttons-project > button {
+    margin : 0.5vw;
+    font-size: 1.5vw;
+    word-spacing: 0.15vw;
+    border-radius: 1vw;
+    margin-bottom: 1vw;
+    padding: 0.5vw;
+  }
+
+  .title-project{
+    font-size: 2vw;
+    letter-spacing: 0.2vw;
+  }
+
+  .tag-project{
+    font-size: 1vw;
+    word-spacing: 0.5vw;
+  }
+
+
+  .image-project{
+    width: 20vw;
+    padding: 1vw;
+  }
+
+  .link-project{
+    bottom: 0vw;
+    font-size: 1.5vw;
+    position :relative;
+    margin-top:  auto; /* marge caculée automatiquement en fonction de la position de l'élément et par rapport à son conteneur */
+    padding: 0.4vw;
+    border-radius: 1vw
+  }
+
+  .buttonAdd-project{
+    font-size: 1.5vw;
+    margin-bottom: 5vw;
+    padding: 0.5vw;
+    border-radius: 1vw
+  }
+
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------MOBILE-----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+@media (orientation: Portrait) {
+
+  .wrapper-project {
+    top : 25vw;
+    grid-auto-rows: auto;
+    grid-template-columns: 1fr; /* 2 colonnes qui occupe tout l'espace disponible */  
+    grid-auto-flow: row; /* les enfants sont placés au fur et à mesure dans la colonne */
+  }
+
+  .item-project{
+    grid-column: 1/2;
+    padding : 3vw;
+    width: 60vw;
+    border-radius: 10px;
+    margin-bottom: 10vw;
+  }
+
+  .buttons-project > button {
+    margin : 1vw;
+    font-size: 3vw;
+    word-spacing: 0.3vw;
+    border-radius: 2vw;
+    margin-bottom: 2vw;
+    padding: 1vw;
+  }
+
+  .title-project{
+    font-size: 6vw;
+    letter-spacing: 0.1vw;
+  }
+
+  .tag-project{
+    font-size: 3vw;
+    word-spacing: 1vw;
+  }
+
+  .image-project{
+    margin: 2vw 0; /*marge en haut et en bas*/
+    width: 40vw;
+  }
+
+  .link-project{
+    font-size: 3vw;
+    margin-top: 2vw;
+    padding: 0.8vw;
+    border-radius: 2vw
+  }
+
+  .buttonAdd-project{
+    font-size: 3vw;
+    margin-bottom: 10vw;
+    padding: 1vw;
+    border-radius: 2vw
+  }
+}
