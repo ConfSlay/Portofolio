@@ -23,6 +23,19 @@ exports.projectValidation = [
       errors.push({"param" : "project_thumbnail_filename", "msg" : "No file selected"});
     }
 
+    //---------Images Files Validation-------------
+    // Si pas de fichier, et pas de nom de fichier, alors c'est une erreur. 
+    // Create = fichier
+    // Upload = fichier ou nom de fichier si 0 modifs
+    console.log("-------------------------");
+    console.log(req.files["project_thumbnail_filename"]);
+    console.log(req.files["project_images"]);
+    console.log("-------------------------");
+    if(req.files["project_images"] === undefined ){
+      // Format similaire à express-validator comme ça c'est homogène pour le front React
+      errors.push({"param" : "project_images", "msg" : "No file selected"});
+    }
+
     //---------Release File Validation-------------
     const needed = req.body.project_is_file_format; //file needed or not
     // Si pas de fichier, et pas de nom de fichier, alors c'est une erreur. 

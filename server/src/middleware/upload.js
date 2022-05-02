@@ -18,7 +18,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const manyUpload = upload.fields([{name: "project_thumbnail_filename", maxCount: 1},{ name: "project_release_filename", maxCount: 1 }]);
+const manyUpload = upload.fields([
+  {name: "project_thumbnail_filename", maxCount: 1},
+  {name: "project_images", maxCount: 10},
+  {name: "project_release_filename", maxCount: 1}]);
 
 exports.processFiles = [
 

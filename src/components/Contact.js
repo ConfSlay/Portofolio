@@ -11,12 +11,12 @@ export default function Contact(props) {
         <div className="box-form">
 
           <div className="item-form">
-            <div className="label-form">Email<span className="textNeeded-form">*</span></div> 
+            <div className="label-form">Email</div> 
             <input type="text" className='textFields-form small' placeholder='johndoe@mail.com'></input>
           </div>
 
           <div className="item-form">
-            <div className="label-form">Message<span className="textNeeded-form">*</span></div>
+            <div className="label-form">Message</div>
             <textarea className='textArea-form' placeholder='Hello Mr.PERRET,'></textarea>
           </div>
 

@@ -1,6 +1,7 @@
 // BDD
 const db = require("../models");
 const Projects = db.Project; 
+const ProjectImage = db.ProjectImage;
 const Op = db.Sequelize.Op; //database open
 // File System
 const fs = require('fs');
@@ -16,12 +17,9 @@ exports.create = (req, res) => {
     project_name : req.body.project_name,
     project_technologies : req.body.project_technologies,
     project_description : req.body.project_description,
-    project_thumbnail_filename : 
-      //req.files["project_thumbnail_filename"][0].destination + 
-      req.files["project_thumbnail_filename"][0].filename,
+    project_thumbnail_filename : req.files["project_thumbnail_filename"][0].filename,
     project_is_file_format : req.body.project_is_file_format,
     project_release_filename : req.body.project_is_file_format === "true" ? //file needed or not     
-      //req.files["project_release_filename"][0].destination + 
       req.files["project_release_filename"][0].filename
       : null, 
     project_release_url : req.body.project_is_file_format === "false" ? req.body.project_release_url : ""
@@ -31,6 +29,17 @@ exports.create = (req, res) => {
   //Save Project in the database
   Projects.create(myNewProject)
     .then(data => {
+      //Project Images
+      req.files["project_images"].forEach(  function(image){
+        ProjectImage.create({
+          project_image_filename : image.filename,
+          //ce nom horrible est généré par sequelize, ca fait chier, j'avais pas 3h à perdre pour changer ça
+          projectProjectId  : data.project_id 
+        })
+        .catch((err) => {
+          console.log(">> Error while creating image: ", err);
+        });
+      });
       res.send(data);
     })
     .catch(err => {
@@ -62,10 +71,11 @@ exports.findAll = (req, res) => {
 //----------------------------------------- Find a single Project with an id--------------------------------------------------------------
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  Projects.findByPk(id)
+  Projects.findByPk(id, { include: [ProjectImage] })
     .then(data => {
       if (data) {
         res.send(data);
+
       } else {
         res.status(404).send({
           message: `Cannot find Project with id=${id}.`
@@ -105,10 +115,16 @@ exports.update = (req, res) => {
       // Thumbnail file
       if (req.files["project_thumbnail_filename"] === undefined)
       { 
+        console.log("----------------------");
+        console.log("thumbnail undefined");
+        console.log("----------------------");
         myNewProject.project_thumbnail_filename = req.body.project_thumbnail_filename;
       }
       else
       {
+        console.log("----------------------");
+        console.log("thumbnail defined");
+        console.log("----------------------");
         myNewProject.project_thumbnail_filename = req.files["project_thumbnail_filename"][0].filename;
         //suppression ancien fichier storage
         let file;
@@ -118,29 +134,48 @@ exports.update = (req, res) => {
         });
       }
 
-      // Release file
-      // passage de file release à URL release
+      //---------------------- RELEASE file----------------------------------
+      // URL release
       if (req.files["project_release_filename"] === undefined && req.body.project_is_file_format === "false")
       {
-        //suppression ancien fichier storage
-        let file;
-        file = myOldProject.project_release_filename;
-        fs.unlink(path.join(directory, file), err => {
-          if (err) throw err;
-        });
+        console.log("----------------------");
+        console.log("URL");
+        console.log("----------------------");
+        // passage de file release à URL release
+        if (myOldProject.project_is_file_format === true) 
+        {
+          console.log("----------------------");
+          console.log("FILE to URL");
+          console.log("----------------------");
+          //suppression ancien fichier storage
+          let file;
+          file = myOldProject.project_release_filename;
+          fs.unlink(path.join(directory, file), err => {
+            if (err) throw err;
+          });
+        }
       }
       //pas de modifs
       else if (req.files["project_release_filename"] === undefined && req.body.project_is_file_format === "true")
       {
+        console.log("----------------------");
+        console.log("0 modifs");
+        console.log("----------------------");
         myNewProject.project_release_filename = req.body.project_release_filename;
       }
       // modif du fichier
       else
       {
+        console.log("----------------------");
+        console.log("Modif");
+        console.log("----------------------");
         myNewProject.project_release_filename = req.files["project_release_filename"][0].filename;
         //suppression ancien fichier storage (si c'était pas un Release URL avant)
         if (myOldProject.project_is_file_format === true)
         {
+          console.log("----------------------");
+          console.log("Modif -> URL to FILE");
+          console.log("----------------------");
           let file;
           file = myOldProject.project_release_filename;
           fs.unlink(path.join(directory, file), err => {
@@ -156,10 +191,6 @@ exports.update = (req, res) => {
           if (num == 1) {
             res.send({
               message: "Project was updated successfully."
-            });
-          } else {
-            res.send({
-              message: `Cannot update Project with id=${id}. Maybe Projects was not found or req.body is empty!`
             });
           }
         })
@@ -185,7 +216,8 @@ exports.delete = (req, res) => {
   // Get object data before delete
   //Obliger de tout emboiter vu que c'est bourré d'asynchrone
   //Aurait pu etre fait autrement et plus propre si je maitrisais mieux les concepts de async function et await
-  Projects.findByPk(id)
+  // Et si sequelize était mieux foutu + meilleur documentation (c'est du foutage de geulle leur doc)
+  Projects.findByPk(id, { include: [ProjectImage] })
     .then(data => {
       myOldProject = data.toJSON();
       //Suppression Fichiers
@@ -195,6 +227,14 @@ exports.delete = (req, res) => {
       fs.unlink(path.join(directory, file), err => {
         if (err) throw err;
       });
+      //Project Images
+      myOldProject.project_images.forEach( function(image) {
+        //Delete file
+        file = image.project_image_filename;
+        fs.unlink(path.join(directory, file), err => {
+          if (err) throw err;
+        });
+      });
       //Release if true
       if (myOldProject.project_is_file_format === true) {
         file = myOldProject.project_release_filename;
@@ -202,19 +242,29 @@ exports.delete = (req, res) => {
           if (err) throw err;
         });
       }
+
+
       //Suppression BDD
-      Projects.destroy({
-        where: { project_id: id }
-      })
-        .then(num => {
-            res.send({
-              message: "Project was deleted successfully!"
+      // Suprresion des Images
+      ProjectImage.destroy({where: { projectProjectId: id} })
+        .then(function() {
+          //Suppression du projet
+          Projects.destroy({
+            where: { project_id: id }
+          })
+            .then(num => {
+                res.send({
+                  message: "Project was deleted successfully!"
+                });
+            })
+            .catch(err => { //Catch Project.Delete
+              res.status(500).send({
+                message: "Could not delete Project with id=" + id
+              });
             });
         })
-        .catch(err => { //Catch Project.Delete
-          res.status(500).send({
-            message: "Could not delete Project with id=" + id
-          });
+        .catch(err => { //Catch PorjectImage.delete
+          message: "Could not delete Project with id=" + id
         });
     })
     .catch(err => { //Catch Project.FindByPK
@@ -227,6 +277,7 @@ exports.delete = (req, res) => {
 //--------------------------------------------------- Delete ALL Project -> DEV--------------------------------------------------
 exports.deleteAll = (req, res) => {
 
+  //Suppression des fichiers dans le folder uploads.
   fs.readdir(directory, (err, files) => {
     if (err) throw err;
 
@@ -237,7 +288,24 @@ exports.deleteAll = (req, res) => {
     }
   });
 
-  //Suppression BDD
+  //Suppression des Project_images en BDD
+  ProjectImage.destroy({
+    where: {},
+    truncate: false
+  })
+    .then(nums => {   
+      res.send({
+        message: nums + ' project_images were deleted successfully!'
+      });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete project_image with id=" + id
+      });
+    });
+
+
+  //Suppression des Project en BDD
   Projects.destroy({
     where: {},
     truncate: false

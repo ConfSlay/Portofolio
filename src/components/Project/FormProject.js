@@ -33,12 +33,14 @@ export default function FormProject(props) {
       project_technologies: "",
       project_description: "",
       project_thumbnail_filename: null,
+      project_images : [], //array vide et pas null sinon ca déconne niveau jsx vu qu'on itère avec forEach()
       project_is_file_format: true,
       project_release_filename: null,
       project_release_url: "",
       project_is_created_or_updated: false,
     }
   );
+
 
   //Pour reset une et une seule fois, en mode update, le champ file 
   // cad supprimer le fichier côté serveur
@@ -65,6 +67,11 @@ export default function FormProject(props) {
     isValid : true,
     message : ""
   })
+
+  const [imagesValidation, setImagesValidation] = useState({
+    isValid : true,
+    message : ""
+  }) 
 
   const [releaseFileValidation, setReleaseFileValidation] = useState({
     isValid : true,
@@ -143,6 +150,12 @@ export default function FormProject(props) {
     setRemoveThumbnailPossibility(false);
   }
 
+  const onChangeProject_images = (e) => {
+    setProject(prevState => {
+      return { ...prevState, project_images : e.target.files } //pas d'index pcq c'est multifile
+    });
+  }
+
   const onChangeProject_is_file_format = (e) => {
     let result = true; 
     //si on passe e.target.value, project_is_file_format pointera sur un objet et non une valeur
@@ -189,6 +202,9 @@ export default function FormProject(props) {
     data.append('project_technologies', project.project_technologies);
     data.append('project_description', project.project_description);
     data.append('project_thumbnail_filename', project.project_thumbnail_filename);
+    for (let i = 0; i < project.project_images.length; i++) {
+      data.append(`project_images`, project.project_images[i]);
+    }
     data.append('project_is_file_format', project.project_is_file_format);
     data.append('project_release_filename', project.project_release_filename);
     data.append('project_release_url', project.project_release_url);
@@ -211,6 +227,7 @@ export default function FormProject(props) {
           setTechnologiesValidation({isValid : true, message : ""})
           setDescriptionValidation({isValid : true, message : ""})
           setThumbnailValidation({isValid : true, message : ""})
+          setImagesValidation({isValid: true, message:""})
           setReleaseFileValidation({isValid : true, message : ""})
           setReleaseUrlValidation({isValid : true, message : ""}) 
           // Gestion des erreurs et ajout au state error
@@ -227,6 +244,9 @@ export default function FormProject(props) {
                 break;
               case "project_thumbnail_filename":
                 setThumbnailValidation({isValid : false, message : error.msg})
+                break;
+              case "project_images":
+                setImagesValidation({isValid : false, message : error.msg})
                 break;
               case "project_release_filename":
                 setReleaseFileValidation({isValid : false, message : error.msg})
@@ -369,11 +389,16 @@ export default function FormProject(props) {
           }
           
 
-
           <div className="item-form">
             <div className="label-form">Images</div>
-            <input type='file' multiple name='project_images' className='files-form'></input>
+            <input type='file' multiple name='project_images' onChange={onChangeProject_images} className='files-form'></input>
+            { imagesValidation.isValid === false ?
+              <div className="errorMessage">{imagesValidation.message}</div>
+            : null 
+            }
           </div> 
+
+
 
           <div className="item-form">
             <div className="label-form">Format</div>

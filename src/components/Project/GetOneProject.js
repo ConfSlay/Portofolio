@@ -24,6 +24,7 @@ export default function GetOneProject(props) {
 
   // ----------------- Initialize State -------------------
   const [notFound,setNotFound] = useState (false); //id not found
+  const [loaded,setLoaded] = useState (false); //data not loaded 
 
   const [project,setProject] = useState( //déclare project en tant que liste key/value
     {
@@ -32,6 +33,7 @@ export default function GetOneProject(props) {
       project_technologies: "",
       project_description: "",
       project_thumbnail_filename: "",
+      project_images : null,
       project_is_file_format: true,
       project_release_filename: "",
       project_release_url: "" 
@@ -50,6 +52,7 @@ export default function GetOneProject(props) {
       .then(response => {
         setProject(response.data);
         console.log(response.data);
+        setLoaded(true);
       })
       .catch(e => {
         setNotFound(true);
@@ -93,9 +96,17 @@ export default function GetOneProject(props) {
 
           <span className="item-discover description-discover">{ project.project_description }</span>
 
-          {/* for image in project.project_images 
-            <img className="item-discover image-discover caroussel_JS" src="{{ uploaded_asset(image.ImageFileName) }}"></img>
-          {% endfor */}
+          {/* for image in project.project_images */}
+
+          {loaded && project.project_images.map((image) => (
+
+          <img 
+            src={ProjectDataService.getUploadsFiles+image.project_image_filename}
+            className="item-discover" 
+            key={image.project_image_id}>
+          </img>
+          ))}
+
 
 
           { project.project_is_file_format === true ? 

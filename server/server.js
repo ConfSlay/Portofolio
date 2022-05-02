@@ -26,7 +26,7 @@ app.use(express.static("public"));
 app.use("/uploads",express.static('uploads')); //uploads folder is now accessible to http-get request suffixed by /uploads
 
 // Sequelize
-const db = require("./app/models");
+const db = require("./src/models");
 db.sequelize.sync(); //Synchro avec les modèles
 
 /*  db.sequelize.sync() - This creates the TABLE if it doesn't exist (and does nothing if it already exists)
@@ -41,8 +41,8 @@ app.get(/^((?!\/api\/).)*$/, (req, res) => {
 
 
 // Routes API
-require("./app/routes/project.routes")(app); 
-//require("./app/routes/auth.routes")(app);
+require("./src/routes/project.routes")(app); 
+//require("./src/routes/auth.routes")(app);
 
 
 // Set Port, Listen for Requests
