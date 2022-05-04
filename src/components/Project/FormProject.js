@@ -34,6 +34,7 @@ export default function FormProject(props) {
       project_description: "",
       project_thumbnail_filename: null,
       project_images : [], //array vide et pas null sinon ca déconne niveau jsx vu qu'on itère avec forEach()
+      project_images_updated : false,
       project_is_file_format: true,
       project_release_filename: null,
       project_release_url: "",
@@ -46,6 +47,7 @@ export default function FormProject(props) {
   // cad supprimer le fichier côté serveur
   const [dataFound,setDataFound] = useState(false);
   const [removeThumbnailPossibility,setRemoveThumbnailPossibility] = useState(false);
+  const [removeImagesPossibility, setRemoveImagesPossibility] = useState(false);
   const [removeReleaseFilePossibility,setRemoveReleaseFilePossibility] = useState(false);
 
   const [nameValidation, setNameValidation] = useState({
@@ -108,6 +110,7 @@ export default function FormProject(props) {
 
   const setRemoveButtons = () => {
     setRemoveThumbnailPossibility(true); //Enclenche la possibilité de supprimer le fichier côté serveur
+    setRemoveImagesPossibility(true);
     if (project.project_is_file_format === true) //seulement si c'est un release de type file
     {
       setRemoveReleaseFilePossibility(true); //Enclenche la possibilité de supprimer le fichier côté serveur
@@ -153,6 +156,16 @@ export default function FormProject(props) {
   const onChangeProject_images = (e) => {
     setProject(prevState => {
       return { ...prevState, project_images : e.target.files } //pas d'index pcq c'est multifile
+    });
+  }
+
+  const onResetProject_images = () => {
+    setProject(prevState => {
+      return { ...prevState, project_images_updated : true } //pcq c'est un fichier
+    });
+    setRemoveImagesPossibility(false);
+    setProject(prevState => {
+      return { ...prevState, project_images_updated : true }
     });
   }
 
@@ -202,8 +215,15 @@ export default function FormProject(props) {
     data.append('project_technologies', project.project_technologies);
     data.append('project_description', project.project_description);
     data.append('project_thumbnail_filename', project.project_thumbnail_filename);
-    for (let i = 0; i < project.project_images.length; i++) {
-      data.append(`project_images`, project.project_images[i]);
+    // images files
+    data.append('project_images_updated', project.project_images_updated);
+
+    //Si c'est les données renvoyées par le serveur ou qu'on est en POST
+    if ( project.project_images_updated === true || props.mode === "create" ) 
+    {
+      for (let i = 0; i < project.project_images.length; i++) {
+        data.append(`project_images`, project.project_images[i]);
+      }    
     }
     data.append('project_is_file_format', project.project_is_file_format);
     data.append('project_release_filename', project.project_release_filename);
@@ -234,25 +254,25 @@ export default function FormProject(props) {
           e.response.data.errors.forEach(error => {
             switch (error.param) { 
               case "project_name":
-                setNameValidation({isValid : false, message : error.msg})
+                setNameValidation({isValid : false, message : error.msg});
                 break;
               case "project_technologies":
-                setTechnologiesValidation({isValid : false, message : error.msg})
+                setTechnologiesValidation({isValid : false, message : error.msg});
                 break;
               case "project_description":
-                setDescriptionValidation({isValid : false, message : error.msg})
+                setDescriptionValidation({isValid : false, message : error.msg});
                 break;
               case "project_thumbnail_filename":
-                setThumbnailValidation({isValid : false, message : error.msg})
+                setThumbnailValidation({isValid : false, message : error.msg});
                 break;
               case "project_images":
-                setImagesValidation({isValid : false, message : error.msg})
+                setImagesValidation({isValid : false, message : error.msg});
                 break;
               case "project_release_filename":
-                setReleaseFileValidation({isValid : false, message : error.msg})
+                setReleaseFileValidation({isValid : false, message : error.msg});
                 break;
               case "project_release_url":
-                setReleaseUrlValidation({isValid : false, message : error.msg})
+                setReleaseUrlValidation({isValid : false, message : error.msg});
                 break;
             }
           });
@@ -290,6 +310,9 @@ export default function FormProject(props) {
                 case "project_thumbnail_filename":
                   setThumbnailValidation({isValid : false, message : error.msg})
                   break;
+                case "project_images":
+                  setImagesValidation({isValid : false, message : error.msg});
+                  break;
                 case "project_release_filename":
                   setReleaseFileValidation({isValid : false, message : error.msg})
                   break;
@@ -317,6 +340,7 @@ export default function FormProject(props) {
       <div className="wrapper-form">
         <div className="box-form">
        
+          {/*----------------------------------------- Name Field ------------------------------------------*/}
           <div className="item-form">
             <div className="label-form">Project Name</div>
             <input 
@@ -332,6 +356,7 @@ export default function FormProject(props) {
             : null }
           </div> 
 
+        {/*----------------------------------------- Technologies Field ----------------------------------------*/}
           <div className="item-form">
             <div className="label-form">Source and target technologies</div>
             <input 
@@ -347,6 +372,7 @@ export default function FormProject(props) {
             : null }
           </div>
 
+        {/*----------------------------------------- Description Field ----------------------------------------*/}
           <div className="item-form">
             <div className="label-form">Description</div>
             <textarea
@@ -362,7 +388,7 @@ export default function FormProject(props) {
           </div>
 
 
-        {/* Thumbnail Field dynamic*/}
+        {/*----------------------------------------- Thumbnail Field ----------------------------------------*/}
           { removeThumbnailPossibility === false ?
           <div className="item-form">
             <div className="label-form">Thumbnail</div>
@@ -388,7 +414,8 @@ export default function FormProject(props) {
           </div> 
           }
           
-
+        {/*--------------------------------------------- Images Field--------------------------------------*/}
+          { removeImagesPossibility === false ?
           <div className="item-form">
             <div className="label-form">Images</div>
             <input type='file' multiple name='project_images' onChange={onChangeProject_images} className='files-form'></input>
@@ -398,8 +425,24 @@ export default function FormProject(props) {
             }
           </div> 
 
+          : 
+          <div className="item-form">
+            <div className="label-form">Images</div>
+            <div className="file-box">
+              <img src={deleteLogo} className="icon-delete" onClick={onResetProject_images}></img>
+              <div className="file-name">
+                { project.project_images.map((image) => (
+                  <div key={image.project_image_id}>{image.project_image_filename}</div>             
+                ))}
+              </div>
+            </div>
+          </div> 
+          }
+
+          {/* {project.project_images} */}
 
 
+        {/*--------------------------------------- Format Select------------------------------------------------*/}
           <div className="item-form">
             <div className="label-form">Format</div>
             <select 
@@ -413,8 +456,9 @@ export default function FormProject(props) {
             </select>
           </div>
 
-        {/* Release MEGA DYNAMIC FIELD GROS BORDEL */}
+        
 
+        {/*----------------------------------------- Release Field (URL OR FILE)----------------------------------------------*/}
           { project.project_is_file_format === true ?
 
             <>
@@ -464,7 +508,7 @@ export default function FormProject(props) {
 
           } 
 
-        {/* changement du noeud texte du bouton submit en fonction de update ou create */}
+        {/*----------------------------------------- Button Submit----------------------------------------*/}
           { props.mode === "create" ?
           <button className="item-form button-form" onClick={saveProject}>Create Project</button>
           :

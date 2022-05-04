@@ -98,7 +98,7 @@ exports.update = (req, res) => {
   // Get object data before delete
   //Obliger de tout emboiter vu que c'est bourré d'asynchrone
   //Aurait pu etre fait autrement et plus propre si je maitrisais mieux les concepts de async function et await
-  Projects.findByPk(id)
+  Projects.findByPk(id, { include: [ProjectImage] })
     .then(data => {
       //Recup les anciennes données
       myOldProject = data.toJSON();
@@ -112,19 +112,13 @@ exports.update = (req, res) => {
         project_release_filename : null, 
         project_release_url : req.body.project_is_file_format === "false" ? req.body.project_release_url : ""
       };
-      // Thumbnail file
+      //------------------------ Thumbnail file ---------------------
       if (req.files["project_thumbnail_filename"] === undefined)
-      { 
-        console.log("----------------------");
-        console.log("thumbnail undefined");
-        console.log("----------------------");
+      {
         myNewProject.project_thumbnail_filename = req.body.project_thumbnail_filename;
       }
       else
       {
-        console.log("----------------------");
-        console.log("thumbnail defined");
-        console.log("----------------------");
         myNewProject.project_thumbnail_filename = req.files["project_thumbnail_filename"][0].filename;
         //suppression ancien fichier storage
         let file;
@@ -134,19 +128,48 @@ exports.update = (req, res) => {
         });
       }
 
-      //---------------------- RELEASE file----------------------------------
+      //------------------------ update Images Files ? ---------------------------------
+      if (req.body.project_images_updated === "true") //update des images
+      { 
+        
+        myOldProject.project_images.forEach(image => {
+          //suppression anciens images files dans storage
+          let file;
+          file = image.project_image_filename;
+          fs.unlink(path.join(directory, file), err => {
+            if (err) throw err;
+          });
+          //suppression anciens images in db
+          ProjectImage.destroy({where: { projectProjectId: id} })
+            .catch(err => { //Catch Project.Update
+              res.status(500).send({
+                message: "Error updating Project with id=" + id
+              });
+            });
+        })
+
+        //ajout des nouvelles images en bdd
+        req.files["project_images"].forEach(  function(image){
+          ProjectImage.create({
+            project_image_filename : image.filename,
+            //ce nom horrible est généré par sequelize, ca fait chier, j'avais pas 3h à perdre pour changer ça
+            projectProjectId  : data.project_id 
+          })
+          .catch((err) => {
+            console.log(">> Error while creating image: ", err);
+          });
+        });
+
+      }
+
+
+      //---------------------- Update RELEASE file ?----------------------------------
       // URL release
       if (req.files["project_release_filename"] === undefined && req.body.project_is_file_format === "false")
       {
-        console.log("----------------------");
-        console.log("URL");
-        console.log("----------------------");
         // passage de file release à URL release
         if (myOldProject.project_is_file_format === true) 
         {
-          console.log("----------------------");
-          console.log("FILE to URL");
-          console.log("----------------------");
           //suppression ancien fichier storage
           let file;
           file = myOldProject.project_release_filename;
@@ -158,24 +181,15 @@ exports.update = (req, res) => {
       //pas de modifs
       else if (req.files["project_release_filename"] === undefined && req.body.project_is_file_format === "true")
       {
-        console.log("----------------------");
-        console.log("0 modifs");
-        console.log("----------------------");
         myNewProject.project_release_filename = req.body.project_release_filename;
       }
       // modif du fichier
       else
       {
-        console.log("----------------------");
-        console.log("Modif");
-        console.log("----------------------");
         myNewProject.project_release_filename = req.files["project_release_filename"][0].filename;
         //suppression ancien fichier storage (si c'était pas un Release URL avant)
         if (myOldProject.project_is_file_format === true)
         {
-          console.log("----------------------");
-          console.log("Modif -> URL to FILE");
-          console.log("----------------------");
           let file;
           file = myOldProject.project_release_filename;
           fs.unlink(path.join(directory, file), err => {
@@ -183,7 +197,7 @@ exports.update = (req, res) => {
           });
         }
       }   
-      // Update a Project
+      //-------------------------- Update the Project------------------------------
       Projects.update(myNewProject, {
         where: { project_id: id }
       })
@@ -194,7 +208,7 @@ exports.update = (req, res) => {
             });
           }
         })
-        .catch(err => {
+        .catch(err => { //Catch Project.Update
           res.status(500).send({
             message: "Error updating Project with id=" + id
           });
@@ -242,8 +256,6 @@ exports.delete = (req, res) => {
           if (err) throw err;
         });
       }
-
-
       //Suppression BDD
       // Suprresion des Images
       ProjectImage.destroy({where: { projectProjectId: id} })
