@@ -9,7 +9,8 @@ import Home from "./components/Home";
 import Contact from "./components/Contact";
 import GetAllProject from "./components/Project/GetAllProject";
 import GetOneProject from "./components/Project/GetOneProject";
-import FormProject from "./components/Project/FormProject";
+import CreateProject from "./components/Project/CreateProject";
+import UpdateProject from "./components/Project/UpdateProject";
 import NotFound from "./components/NotFound";
 
 
@@ -23,8 +24,8 @@ root.render(
       <Route path="/Contact" element={<Contact />} />
       <Route path="/Projects" element={<GetAllProject />} />
       <Route path="/Project/:id" element={<GetOneProject />} />
-      <Route path="/Project/create" element={<FormProject  mode="create"/>} />
-      <Route path="/Project/update/:id" element={<FormProject mode="update"/>} /> 
+      <Route path="/Project/create" element={<CreateProject/>} />
+      <Route path="/Project/update/:id" element={<UpdateProject/>} /> 
       <Route path="/404" element={<NotFound/>} />
       <Route path="*" element={<NotFound/>} />
 
