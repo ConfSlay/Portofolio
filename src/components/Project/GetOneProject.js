@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link , useParams , useNavigate } from "react-router-dom";
 import ProjectDataService from "../../services/project.service";
 import App from "../../App"
+import Caroussel from "./Caroussel";
 
 
 export default function GetOneProject(props) {
@@ -96,17 +97,12 @@ export default function GetOneProject(props) {
 
           <span className="item-discover description-discover">{ project.project_description }</span>
 
-          {/* for image in project.project_images */}
-
-          {loaded && project.project_images.map((image) => (
-
-          <img 
-            src={ProjectDataService.getUploadsFiles+image.project_image_filename}
-            className="item-discover" 
-            key={image.project_image_id}>
-          </img>
-          ))}
-
+          
+          <Caroussel
+            loaded={loaded}
+            project={project}
+          >
+          </Caroussel>
 
 
           { project.project_is_file_format === true ? 

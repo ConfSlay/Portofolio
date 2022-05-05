@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+* { min-height: 0; min-width: 0; } /* pour fix un bug de react-slick avec les container flex */
+
 html {  /* pour determiner une police par défaut de la page*/
   font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;
   font-weight: 500;

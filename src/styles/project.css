@@ -49,10 +49,6 @@
   cursor: pointer;
 }
 
-.image-discover{
-  align-self: center;
-}
-
 
 /*-----------------------------------------------------------------------------------------------*/
 /*------------------------------------------------DESKTOP----------------------------------------*/
@@ -91,9 +87,9 @@
     width: 80vw;
   }
 
-  .image-discover{
-    width: 60vw;
-    border-radius: 1vw;
+  .caroussel-discover{
+    align-self: center;
+    width:50vw;
   }
 
   .button-discover{
@@ -103,6 +99,7 @@
     padding: 0.5vw;
     border-radius: 1vw;
   }
+
 }
 
 /*-----------------------------------------------------------------------------------------------*/
@@ -140,9 +137,9 @@
     word-spacing: 0.1vw;
   }
 
-  .image-discover{
+  .caroussel-discover{
+    align-self: center;
     width: 80vw;
-    border-radius: 1vw;
   }
 
   .button-discover{
