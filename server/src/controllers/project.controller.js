@@ -287,7 +287,7 @@ exports.delete = (req, res) => {
 };
 
 //--------------------------------------------------- Delete ALL Project -> DEV--------------------------------------------------
-exports.deleteAll = (req, res) => {
+exports.deleteAll = async (req, res) => {
 
   //Suppression des fichiers dans le folder uploads.
   fs.readdir(directory, (err, files) => {
@@ -300,36 +300,32 @@ exports.deleteAll = (req, res) => {
     }
   });
 
-  //Suppression des Project_images en BDD
-  ProjectImage.destroy({
-    where: {},
-    truncate: false
-  })
-    .then(nums => {   
-      res.send({
-        message: nums + ' project_images were deleted successfully!'
-      });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Could not delete project_image with id=" + id
-      });
-    });
+  try {
 
+    //Suppression des Project_images en BDD
+    const destroyImages = await ProjectImage.destroy({
+        where: {},
+        truncate: false
+      });
 
-  //Suppression des Project en BDD
-  Projects.destroy({
-    where: {},
-    truncate: false
-  })
-    .then(nums => {   
-      res.send({
-        message: nums + ' projects were deleted successfully!'
-      });
-    })
-    .catch(err => {
+    if (destroyImages < 1) {
       res.status(500).send({
-        message: "Could not delete Project with id=" + id
+        message: "Could not delete Projects Images"
       });
-    });
+    }
+
+    const destroyProjects = Projects.destroy({
+        where: {},
+        truncate: false
+      });
+
+    if (destroyProjects < 1) {
+      res.status(500).send({
+        message: "Could not delete Projects"
+      });
+    }
+
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
 };

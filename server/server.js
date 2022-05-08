@@ -11,6 +11,10 @@ var corsOptions = {
 //Express
 const path = require("path");
 const express = require("express");
+const uuid = require('uuid').v4;
+const cookieSession = require('cookie-session')
+
+
 const app = express();
 
 app.use(cors(corsOptions));
@@ -21,11 +25,22 @@ app.use(
   })
 );
 
+// SESSION
+app.use(
+  cookieSession({
+    name: "admin-session",
+    secret: process.env.SESSION_SECRET_KEY, // should use as secret environment variable
+    httpOnly: true //indicate that the cookie is only to be sent over HTTP(S), and not made available to client JavaScript.
+  })
+);
+
+
+// STATIC FILES
 app.use(express.static(path.join(__dirname, "..", "build"))); // =  FROM __dirname TO ../build
 app.use(express.static("public"));
 app.use("/uploads",express.static('uploads')); //uploads folder is now accessible to http-get request suffixed by /uploads
 
-// Sequelize
+// SEQUELIZE
 const db = require("./src/models");
 db.sequelize.sync(); //Synchro avec les modèles
 
@@ -42,7 +57,7 @@ app.get(/^((?!\/api\/).)*$/, (req, res) => {
 
 // Routes API
 require("./src/routes/project.routes")(app); 
-//require("./src/routes/auth.routes")(app);
+require("./src/routes/auth.routes")(app);
 
 
 // Set Port, Listen for Requests

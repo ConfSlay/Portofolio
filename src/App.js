@@ -30,7 +30,7 @@ export default function App(props) {
 
     return (
       <>   
-        <div id="particles-js"></div> {/* particles.js container */}
+        <div id="background"></div> 
         <div className="Header">
             <Link className="leftBox" to="/">
                 <img className="itemLeftBox imageHeader" src={logo}></img> 

@@ -1,8 +1,9 @@
-const {projectValidation, authValidation} = require ("./validation");
+const {projectValidation} = require ("./validation");
 const {processFiles} = require ("./upload");
+const {verifyToken} = require("./authJwt");
 
 module.exports = {
+	verifyToken,
 	projectValidation,
-	authValidation,
 	processFiles,
 };

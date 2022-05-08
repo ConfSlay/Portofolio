@@ -13,12 +13,12 @@ export default function TextInput(props) {
 			{ props.multiline === true ?
 
 		    <textarea
-          className="textArea-form" 
-          id={props.fieldName}
-          value={props.fieldValue} 
-          onChange={props.onChangeEvent} 
-          name={props.fieldName}>
-        </textarea> 
+				className="textArea-form" 
+				id={props.fieldName}
+				value={props.fieldValue} 
+				onChange={props.onChangeEvent} 
+				name={props.fieldName}>
+        	</textarea> 
 
 			: 
 				<>
@@ -30,16 +30,16 @@ export default function TextInput(props) {
 						value={props.fieldValue} 
 						onChange={props.onChangeEvent} 
 						name={props.fieldName}
-		      />
-	      :
-	      	<input 
-					type="text"
-					className="textFields-form" 
-					id={props.fieldName} 
-					value={props.fieldValue} 
-					onChange={props.onChangeEvent} 
-					name={props.fieldName}
-	      	/>				
+					/>
+				:
+					<input 
+						type="text"
+						className="textFields-form" 
+						id={props.fieldName} 
+						value={props.fieldValue} 
+						onChange={props.onChangeEvent} 
+						name={props.fieldName}
+	      			/>			
 				}
 				</>
 

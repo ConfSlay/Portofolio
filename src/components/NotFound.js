@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import App from "../App";
 import logo from "../image/404.png";
 
-export default function Home(props) {
+export default function NotFound(props) {
   return (
     <>
       <App />
