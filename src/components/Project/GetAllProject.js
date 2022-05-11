@@ -16,7 +16,6 @@ export default function GetAllProject(props) {
     ProjectDataService.getAll()
       .then(response => {
         setProjects(response.data);
-        console.log(response.data);
       })
       .catch(e => {
         console.log(e); 
@@ -27,7 +26,6 @@ export default function GetAllProject(props) {
     //SWAL 
     ProjectDataService.delete(id)      
       .then(response => {
-        console.log(response.data);
         setProjects(projects.filter(projects => projects.project_id !== id)); //enleve le project supprimé du state pour que ca refresh
       })
       .catch(e => {

@@ -17,7 +17,7 @@ exports.signin = async (req, res) => {
 
 
     if (!user) {
-      return res.status(404).send({ message: "User Not found." });
+      return res.status(404).send({ message: "Not found." });
     }
 
     // Verif Password
@@ -26,14 +26,14 @@ exports.signin = async (req, res) => {
       user.user_password
     );
     if (!passwordIsValid) {
-      return res.status(401).send({
-        message: "Invalid Password!",
+      return res.status(404).send({
+        message: "Not found.",
       });
     }
 
     //Signature du token que l'on va envoyer
     const token = jwt.sign({ id: user.id }, process.env.SESSION_SECRET_KEY, {
-      expiresIn: 86400, // 24 hours
+      expiresIn: 1200, // 1200 sec soit 20 min
     });
 
     req.session.token = token;

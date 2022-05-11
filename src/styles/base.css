@@ -92,6 +92,7 @@ html {  /* pour determiner une police par défaut de la page*/
 }
 
 .logoutBubble {
+  border: none;
   position: fixed;
   z-index: 20;
   background: rgba(232, 16, 41, 0.8);
@@ -101,6 +102,7 @@ html {  /* pour determiner une police par défaut de la page*/
 }
 
 .logoutBubble:hover {
+  border: none;
   background-color: rgba(60,60,60,1);
   /*background: linear-gradient(0deg, rgba(140,136,148,1) 5%, rgba(247,239,239,1) 85%);*/
   color: red; 

@@ -8,14 +8,12 @@ export default function   PasswordField(props) {
 
       <input 
         type="password" 
-        className="textFields-form"
+        className="textFields-form small"
         id={props.fieldName} 
         value={props.fieldValue} 
         onChange={props.onChangeEvent} 
         name={props.fieldName}
       />
-
-      </div>
     </div>
   );
 }

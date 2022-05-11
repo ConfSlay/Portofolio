@@ -8,14 +8,13 @@ export default function IdentifiantField(props) {
 
       <input 
         type="text" 
-        className="textFields-form"
+        className="textFields-form small"
         id={props.fieldName} 
         value={props.fieldValue} 
         onChange={props.onChangeEvent} 
         name={props.fieldName}
       />
 
-      </div>
     </div>
   );
 }

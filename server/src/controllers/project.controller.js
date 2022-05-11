@@ -10,322 +10,279 @@ const directory = './uploads';
 
 
 //----------------------------------------- Create and Save a new Project-----------------------------------------------------------
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
 
-  // Create a Project
-  const myNewProject = {
-    project_name : req.body.project_name,
-    project_technologies : req.body.project_technologies,
-    project_description : req.body.project_description,
-    project_thumbnail_filename : req.files["project_thumbnail_filename"][0].filename,
-    project_is_file_format : req.body.project_is_file_format,
-    project_release_filename : req.body.project_is_file_format === "true" ? //file needed or not     
-      req.files["project_release_filename"][0].filename
-      : null, 
-    project_release_url : req.body.project_is_file_format === "false" ? req.body.project_release_url : ""
-  };
+  try {
 
+    // Create a Project
+    const myNewProject = {
+      project_name : req.body.project_name,
+      project_technologies : req.body.project_technologies,
+      project_description : req.body.project_description,
+      project_thumbnail_filename : req.files["project_thumbnail_filename"][0].filename,
+      project_is_file_format : req.body.project_is_file_format,
+      project_release_filename : req.body.project_is_file_format === "true" ? //file needed or not     
+        req.files["project_release_filename"][0].filename
+        : null, 
+      project_release_url : req.body.project_is_file_format === "false" ? req.body.project_release_url : ""
+    };
 
-  //Save Project in the database
-  Projects.create(myNewProject)
-    .then(data => {
-      //Project Images
-      req.files["project_images"].forEach(  function(image){
-        ProjectImage.create({
-          project_image_filename : image.filename,
-          //ce nom horrible est généré par sequelize, ca fait chier, j'avais pas 3h à perdre pour changer ça
-          projectProjectId  : data.project_id 
-        })
-        .catch((err) => {
-          console.log(">> Error while creating image: ", err);
+    //Save Project in the database
+    const dataProject = await Projects.create(myNewProject);
+
+    if(!dataProject) {
+      return res.status(500).send({message: "an error has occurred while creating the Project"});
+    }
+    
+    //Project Images
+    req.files["project_images"].forEach( async function(image){
+      try {
+        const dataProjectImages = await ProjectImage.create({
+          project_image_filename : image.filename,            
+          projectProjectId  : dataProject.project_id //ce nom horrible est généré par sequelize, ca fait chier, j'avais pas 3h à perdre pour changer ça
         });
-      });
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          /*err.message ||*/ "Some error occurred while creating the Project"
-      });
+      } catch (err) {
+        return res.status(500).send("Error while saving images");
+      }
     });
+
+    return res.status(200).send(dataProject);
+
+  } catch (error) {
+    return res.status(500).send("Internal server error");
+  }
 };
 
 
 
 //--------------------------------------- Retrieve all Projects from the database.-----------------------------------------------------
-exports.findAll = (req, res) => {
-  Projects.findAll()
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          /*err.message ||*/ "Some error occurred while retrieving Projects."
-      });
-    });
+exports.findAll = async (req, res) => {
+
+  try {
+
+    const data = await Projects.findAll();
+    return res.status(200).send(data);
+
+  } catch (error) {
+    return res.status(500).send("Internal server error");
+  }
 };
 
 
 
 //----------------------------------------- Find a single Project with an id--------------------------------------------------------------
-exports.findOne = (req, res) => {
-  const id = req.params.id;
-  Projects.findByPk(id, { include: [ProjectImage] })
-    .then(data => {
-      if (data) {
-        res.send(data);
+exports.findOne = async (req, res) => {
 
-      } else {
-        res.status(404).send({
-          message: `Cannot find Project with id=${id}.`
-        });
+  try {
+
+      const id = req.params.id;
+      const data = await Projects.findByPk(id, { include: [ProjectImage] });
+
+      if(!data) {
+        return res.status(404).send({message: `Cannot find Project with id=${id}.`});
       }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error retrieving Project with id=" + id
-      });
-    });
+
+      return res.status(200).send(data);
+
+  } catch {
+    return res.status(500).send("Internal server error");
+  }
 };
 
 //-------------------------------------------Update a Project with id in the request------------------------------------------------------
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
-  const id = req.params.id;
+  try {
 
-  let myOldProject;
-  // Get object data before delete
-  //Obliger de tout emboiter vu que c'est bourré d'asynchrone
-  //Aurait pu etre fait autrement et plus propre si je maitrisais mieux les concepts de async function et await
-  Projects.findByPk(id, { include: [ProjectImage] })
-    .then(data => {
-      //Recup les anciennes données
-      myOldProject = data.toJSON();
-      // Mise en place des nouvelles données et suppression des Fichiers
-      const myNewProject = {
-        project_name : req.body.project_name,
-        project_technologies : req.body.project_technologies,
-        project_description : req.body.project_description,
-        project_thumbnail_filename :  "",
-        project_is_file_format : req.body.project_is_file_format,
-        project_release_filename : null, 
-        project_release_url : req.body.project_is_file_format === "false" ? req.body.project_release_url : ""
-      };
-      //------------------------ Thumbnail file ---------------------
-      if (req.files["project_thumbnail_filename"] === undefined)
-      {
-        myNewProject.project_thumbnail_filename = req.body.project_thumbnail_filename;
-      }
-      else
-      {
-        myNewProject.project_thumbnail_filename = req.files["project_thumbnail_filename"][0].filename;
-        //suppression ancien fichier storage
-        let file;
-        file = myOldProject.project_thumbnail_filename;
-        fs.unlink(path.join(directory, file), err => {
-          if (err) throw err;
-        });
-      }
+    const id = req.params.id;
 
-      //------------------------ update Images Files ? ---------------------------------
-      if (req.body.project_images_updated === "true") //update des images
-      { 
-        
-        myOldProject.project_images.forEach(image => {
-          //suppression anciens images files dans storage
-          let file;
-          file = image.project_image_filename;
-          fs.unlink(path.join(directory, file), err => {
-            if (err) throw err;
-          });
-          //suppression anciens images in db
-          ProjectImage.destroy({where: { projectProjectId: id} })
-            .catch(err => { //Catch Project.Update
-              res.status(500).send({
-                message: "Error updating Project with id=" + id
-              });
-            });
-        })
+    // Get object data before update
+    const dataProject = await  Projects.findByPk(id, { include: [ProjectImage] });
 
-        //ajout des nouvelles images en bdd
-        req.files["project_images"].forEach(  function(image){
-          ProjectImage.create({
-            project_image_filename : image.filename,
-            //ce nom horrible est généré par sequelize, ca fait chier, j'avais pas 3h à perdre pour changer ça
-            projectProjectId  : data.project_id 
-          })
-          .catch((err) => {
-            console.log(">> Error while creating image: ", err);
-          });
-        });
+    // if project doesnt exist
+    if(!dataProject) {
+      return res.status(404).send({ message: "Error retrieving Project with id=" + id })
+    }
 
-      }
+    // just for code readability
+    let myOldProject = dataProject.toJSON();
 
+    const myNewProject = {
+      project_name : req.body.project_name,
+      project_technologies : req.body.project_technologies,
+      project_description : req.body.project_description,
+      project_thumbnail_filename :  "",
+      project_is_file_format : req.body.project_is_file_format,
+      project_release_filename : null, 
+      project_release_url : req.body.project_is_file_format === "false" ? req.body.project_release_url : ""
+    };
 
-      //---------------------- Update RELEASE file ?----------------------------------
-      // URL release
-      if (req.files["project_release_filename"] === undefined && req.body.project_is_file_format === "false")
-      {
-        // passage de file release à URL release
-        if (myOldProject.project_is_file_format === true) 
-        {
-          //suppression ancien fichier storage
-          let file;
-          file = myOldProject.project_release_filename;
-          fs.unlink(path.join(directory, file), err => {
-            if (err) throw err;
-          });
-        }
-      }
-      //pas de modifs
-      else if (req.files["project_release_filename"] === undefined && req.body.project_is_file_format === "true")
-      {
-        myNewProject.project_release_filename = req.body.project_release_filename;
-      }
-      // modif du fichier
-      else
-      {
-        myNewProject.project_release_filename = req.files["project_release_filename"][0].filename;
-        //suppression ancien fichier storage (si c'était pas un Release URL avant)
-        if (myOldProject.project_is_file_format === true)
-        {
-          let file;
-          file = myOldProject.project_release_filename;
-          fs.unlink(path.join(directory, file), err => {
-            if (err) throw err;
-          });
-        }
-      }   
-      //-------------------------- Update the Project------------------------------
-      Projects.update(myNewProject, {
-        where: { project_id: id }
-      })
-        .then(num => {
-          if (num == 1) {
-            res.send({
-              message: "Project was updated successfully."
-            });
-          }
-        })
-        .catch(err => { //Catch Project.Update
-          res.status(500).send({
-            message: "Error updating Project with id=" + id
-          });
-        });
-    })
-    .catch(err => { //Catch Project.FindByPK
-      res.status(500).send({
-        message: "Error retrieving Project with id=" + id
-      });
-    });
-};
-
-//----------------------------------- Delete a Project with the specified id in the request--------------------------------------
-exports.delete = (req, res) => {
-  
-  const id = req.params.id;
-
-  let myOldProject;
-  // Get object data before delete
-  //Obliger de tout emboiter vu que c'est bourré d'asynchrone
-  //Aurait pu etre fait autrement et plus propre si je maitrisais mieux les concepts de async function et await
-  // Et si sequelize était mieux foutu + meilleur documentation (c'est du foutage de geulle leur doc)
-  Projects.findByPk(id, { include: [ProjectImage] })
-    .then(data => {
-      myOldProject = data.toJSON();
-      //Suppression Fichiers
+    //------- update Thumbnail file ? -------
+    if (req.files["project_thumbnail_filename"] === undefined)
+    {
+      myNewProject.project_thumbnail_filename = req.body.project_thumbnail_filename;
+    }
+    else
+    {
+      myNewProject.project_thumbnail_filename = req.files["project_thumbnail_filename"][0].filename;
+      //suppression ancien fichier storage
       let file;
-      //Thumbnail 
       file = myOldProject.project_thumbnail_filename;
-      fs.unlink(path.join(directory, file), err => {
-        if (err) throw err;
-      });
-      //Project Images
-      myOldProject.project_images.forEach( function(image) {
-        //Delete file
+      fs.unlink(path.join(directory, file), err => {if (err) throw err; });
+    }
+
+    //-------- update Images Files ? -------------
+    if (req.body.project_images_updated === "true") //update des images
+    {         
+       myOldProject.project_images.forEach(async image => {
+        //suppression anciens images files dans storage
+        let file;
         file = image.project_image_filename;
         fs.unlink(path.join(directory, file), err => {
           if (err) throw err;
         });
+        //suppression anciens images in db
+        const destroyImages = await ProjectImage.destroy({where: { projectProjectId: id} });       
       });
-      //Release if true
-      if (myOldProject.project_is_file_format === true) {
+
+      //ajout des nouvelles images en bdd
+      req.files["project_images"].forEach( async function(image){
+        const createImages = await ProjectImage.create({
+          project_image_filename : image.filename,
+          //ce nom horrible est généré par sequelize, ca fait chier, j'avais pas 3h à perdre pour changer ça
+          projectProjectId  : myOldProject.project_id 
+        });
+      });
+    }
+
+    //---- Update RELEASE file ?--------
+    // URL release
+    if (req.files["project_release_filename"] === undefined && req.body.project_is_file_format === "false")
+    {
+      // passage de file release à URL release
+      if (myOldProject.project_is_file_format === true) 
+      {
+        //suppression ancien fichier storage
+        let file;
         file = myOldProject.project_release_filename;
         fs.unlink(path.join(directory, file), err => {
           if (err) throw err;
         });
       }
-      //Suppression BDD
-      // Suprresion des Images
-      ProjectImage.destroy({where: { projectProjectId: id} })
-        .then(function() {
-          //Suppression du projet
-          Projects.destroy({
-            where: { project_id: id }
-          })
-            .then(num => {
-                res.send({
-                  message: "Project was deleted successfully!"
-                });
-            })
-            .catch(err => { //Catch Project.Delete
-              res.status(500).send({
-                message: "Could not delete Project with id=" + id
-              });
-            });
-        })
-        .catch(err => { //Catch PorjectImage.delete
-          message: "Could not delete Project with id=" + id
+    }
+    //pas de modifs
+    else if (req.files["project_release_filename"] === undefined && req.body.project_is_file_format === "true")
+    {
+      myNewProject.project_release_filename = req.body.project_release_filename;
+    }
+    // modif du fichier
+    else
+    {
+      myNewProject.project_release_filename = req.files["project_release_filename"][0].filename;
+      //suppression ancien fichier storage (si c'était pas un Release URL avant)
+      if (myOldProject.project_is_file_format === true)
+      {
+        let file;
+        file = myOldProject.project_release_filename;
+        fs.unlink(path.join(directory, file), err => {
+          if (err) throw err;
         });
-    })
-    .catch(err => { //Catch Project.FindByPK
-      res.status(500).send({
-        message: "Error retrieving Project with id=" + id
-      });
-    });  
+      }
+    }
+
+    //--------- Update the Project------------
+    const updateProject = await Projects.update(myNewProject, {where: { project_id: id }});
+
+    return res.status(200).send({message: "Project was updated successfully."});
+
+  } catch (error) {
+    return res.status(500).send("Internal server error");
+  }
 };
+
+
+//----------------------------------- Delete a Project with the specified id in the request--------------------------------------
+exports.delete = async (req, res) => {
+
+  try {
+
+    const id = req.params.id;
+
+    // Get object data before delete
+    const dataProject = await Projects.findByPk(id, { include: [ProjectImage] } ); //
+
+    // if project doesnt exist
+    if(!dataProject) {
+      return res.status(404).send({ message: "Error retrieving Project with id=" + id })
+    }
+
+    // just for code readability
+    let myOldProject = dataProject.toJSON();
+
+    //Suppression Fichiers
+    let file;
+
+    //Thumbnail file
+    file = myOldProject.project_thumbnail_filename;
+    fs.unlink(path.join(directory, file), err => {if (err) throw err;});
+
+    
+
+    //Project Images files
+    myOldProject.project_images.forEach( async function(image) {
+      //Delete file
+      file = image.project_image_filename;
+      fs.unlink(path.join(directory, file), err => {if (err) throw err;});
+    });
+
+    //Release if true
+    if (myOldProject.project_is_file_format === true) {
+      file = myOldProject.project_release_filename;
+      fs.unlink(path.join(directory, file), err => {if (err) throw err;});
+
+    }
+      
+    //-----Suppression BDD------
+    const destroyImages = await ProjectImage.destroy({where: { projectProjectId: id} });
+
+    const destroyProject = await Projects.destroy({where: { project_id: id }});
+
+    return res.status(200).send("Project was deleted successfully!");
+
+  } catch (err) {
+    return res.status(500).send(err);
+  }
+};  
 
 //--------------------------------------------------- Delete ALL Project -> DEV--------------------------------------------------
 exports.deleteAll = async (req, res) => {
 
-  //Suppression des fichiers dans le folder uploads.
-  fs.readdir(directory, (err, files) => {
-    if (err) throw err;
-
-    for (const file of files) {
-      fs.unlink(path.join(directory, file), err => {
-        if (err) throw err;
-      });
-    }
-  });
-
   try {
 
+    //Suppression des fichiers dans le folder uploads.
+    fs.readdir(directory, (err, files) => {
+      if (err) throw err;
+
+      for (const file of files) {
+        fs.unlink(path.join(directory, file), err => {if (err) throw err;});
+      }
+    });
+  
     //Suppression des Project_images en BDD
     const destroyImages = await ProjectImage.destroy({
         where: {},
         truncate: false
       });
 
-    if (destroyImages < 1) {
-      res.status(500).send({
-        message: "Could not delete Projects Images"
-      });
-    }
-
-    const destroyProjects = Projects.destroy({
+    //Suppression des Projects
+    const destroyProjects = await Projects.destroy({
         where: {},
         truncate: false
       });
 
-    if (destroyProjects < 1) {
-      res.status(500).send({
-        message: "Could not delete Projects"
-      });
-    }
+    return res.status(200).send("Projects deleted");
 
   } catch (error) {
-    return res.status(500).send({ message: error.message });
+    return res.status(500).send("Internal server error");
   }
 };

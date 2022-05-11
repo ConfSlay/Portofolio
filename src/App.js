@@ -1,12 +1,43 @@
-import React, { useEffect } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link , useNavigate } from "react-router-dom";
 import logo from "./image/thunderParticle.png";
+import AuthService from "./services/auth.service";
 import "./App.css";
 
 
 export default function App(props) {
 
-    useEffect(()=>{  // Menu burger Animation et Display
+    //--------------REDIRECTION APRES LOGOUT  --------
+    const navigate = useNavigate();
+    useEffect(() => { //si le composant a été updated d'une manière quelconque (state) alors ca s'execute
+
+        // ----- Check if Admin -------------
+        const admin = AuthService.getCurrentUser();
+        if (admin)
+        {
+            setIsAdmin(true); 
+        }
+        else
+        {
+            setIsAdmin(false); 
+        }
+
+        if (redirect === true)
+        {
+            setRedirect(false);
+            navigate('/Projects');
+        }
+
+    });
+
+    // --------- STATE --------------
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [redirect, setRedirect] = useState(false);
+
+
+    // ----- Component mount --------  
+    useEffect(()=>{ 
+        // ---- Menu burger Animation et Display des composants burger -----------
         document.querySelector(".iconMenuBox").addEventListener('click', function() {
             // Icon
             document.querySelector(".icon-1").classList.toggle('a');
@@ -25,12 +56,21 @@ export default function App(props) {
                 document.querySelector(".burgerMenuBox").classList.toggle('appearing');
             }
         });
-    },[]) //notice the empty array here so it only happens once when the component is up
+
+    },[]); //notice the empty array here so it only happens once when the component is up
+
+    const logout = () => {
+        AuthService.logout();
+        setIsAdmin(false);
+        setRedirect(true);
+    };
 
 
+    // ------------ JSX ------------------
     return (
       <>   
         <div id="background"></div> 
+
         <div className="Header">
             <Link className="leftBox" to="/">
                 <img className="itemLeftBox imageHeader" src={logo}></img> 
@@ -59,6 +99,12 @@ export default function App(props) {
                 <Link className="itemLinksBox" to="/Projects">PROJETS</Link> 
             </div>         
         </div>
+
+        { isAdmin === true ? 
+            <button class="logoutBubble" onClick={logout}>Déconnexion</button>
+        :
+            null
+        }   
       </>
     );
-    }
+}

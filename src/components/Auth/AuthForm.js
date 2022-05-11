@@ -6,25 +6,23 @@ import PasswordField from "./PasswordField";
 export default function AuthForm(props) {
 
   return (
-    <>
-      <App />
 
       <div className="wrapper-form">
         <div className="box-form">
 
           <IdentifiantField
-            labelName=
-            fieldName=
-            fieldValue=
-            onChangeEvent=
+            labelName="Username"
+            fieldName={props.UsernameFieldName}
+            fieldValue={props.UsernameFieldValue}
+            onChangeEvent={props.OnChangeUsername}
           >
           </IdentifiantField>
 
           <PasswordField
-            labelName=
-            fieldName=
-            fieldValue=
-            onChangeEvent= 
+            labelName="Password"
+            fieldName={props.PasswordFieldName}
+            fieldValue={props.PasswordFieldValue}
+            onChangeEvent={props.OnChangePassword}
           >
           </PasswordField>
 
@@ -35,11 +33,9 @@ export default function AuthForm(props) {
                 null 
           }
 
-          <button className="item-form button-form" onClick={props.saveProject}>Connect</button>
+          <button className="item-form button-form" onClick={props.submitAuth}>Connect</button>
 
         </div>
       </div>
-
-    </>
   );
 }

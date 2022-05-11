@@ -93,8 +93,7 @@ export default function UpdateProject(props) {
     ProjectDataService.get(id)
       .then(response => {
         setProject(response.data);
-        setDataFound(true); //pour définir les options de removes avec croix rouge  
-        console.log("DATA FOUND"); //TEST  
+        setDataFound(true); //pour définir les options de removes avec croix rouge   
       })
       .catch(e => {
         setNotFound(true);

@@ -5,7 +5,10 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+
 import Home from "./components/Home";
+import Login from "./components/Auth/Login";
+//import Logout from "./components/Auth/Logout";
 import Contact from "./components/Contact";
 import GetAllProject from "./components/Project/GetAllProject";
 import GetOneProject from "./components/Project/GetOneProject";
@@ -21,6 +24,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route exact path="/" element={<Home />} />
+      <Route path="/Login" element={<Login  />} />
       <Route path="/Contact" element={<Contact />} />
       <Route path="/Projects" element={<GetAllProject />} />
       <Route path="/Project/:id" element={<GetOneProject />} />
