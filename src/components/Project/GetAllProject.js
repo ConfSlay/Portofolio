@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'; //React pour JSX
 import { Link, useNavigate } from "react-router-dom";
 import ProjectDataService from "../../services/project.service";
+import AuthService from "../../services/auth.service";
 import App from "../../App"
  
 export default function GetAllProject(props) {
@@ -9,8 +10,12 @@ export default function GetAllProject(props) {
   const [projects,setProjects] = useState([]); //Déclare projects en tant qu'array vu qu'on va recevoir un tableau d'objets en json
   const navigate = useNavigate();
 
- // useEffect = quand le composant est inétgré dans le DOM 
-  useEffect(()=>{ retrieveProjects() },[]) //notice the empty array here so it only happens once
+ // useEffect avec ,[])  = quand le composant est inétgré dans le DOM 
+  useEffect(()=>{ 
+
+    retrieveProjects(); 
+
+  },[]) //notice the empty array here so it only happens once
 
   const retrieveProjects = () => {
     ProjectDataService.getAll()
@@ -41,47 +46,55 @@ export default function GetAllProject(props) {
 
   // ----------------- JSX ---------------
   return (
-    <>
-      <App />
-      <div className="wrapper-project">
-                   
-        {projects && projects.map((project) => (
+    <div className="wrapper-project">
+                 
+      {projects && projects.map((project) => (
 
-          <div className="item-project" key={project.project_id}>
+        <div className="item-project" key={project.project_id}>
 
-            <div className="buttons-project"> {/* if is_granted('ROLE_ADMIN') */}
+          { props.isAdmin ? 
+
+            <div className="buttons-project"> 
               
               <button className="deleteProjectButton-project alertDisplayerDelete_JS" 
                 onClick={deleteProject.bind(this, project.project_id)}
-              >Delete project</button>  {/* CRSF TOKEN */} 
+              >Delete project</button>
 
               <button className="updateProjectButton-project" 
                 onClick={redirectToUpdate.bind(this, project.project_id)}
-              >Update project</button>  {/* ->  CRSF TOKEN */}
+              >Update project</button> 
 
-            </div>     
+            </div>
 
-            <span className="title-project">{project.project_name}</span>
+          :
+            null
+          }
+   
 
-            <span className="tag-project">{project.project_technologies}</span>
+          <span className="title-project">{project.project_name}</span>
 
-            <img 
-              className="image-project" 
-              src={ProjectDataService.getUploadsFiles+project.project_thumbnail_filename}>
-            </img>
-     
-            <Link className="link-project" to={"/Project/" + project.project_id}>See More</Link>
-            
-          </div>
+          <span className="tag-project">{project.project_technologies}</span>
 
-        ))}
+          <img 
+            className="image-project" 
+            src={ProjectDataService.getUploadsFiles+project.project_thumbnail_filename}>
+          </img>
+   
+          <Link className="link-project" to={"/Project/" + project.project_id}>See More</Link>
+          
+        </div>
 
-        {/* if is_granted('ROLE_ADMIN') %} */}
+      ))}
+
+      { props.isAdmin ?
+
         <Link className="buttonAdd-project" to="/Project/create">Add new project</Link>
 
-        
-      </div>
-    </>
+      :
+        null
+      }
+              
+    </div>
   );
 }
  

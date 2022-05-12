@@ -7,12 +7,21 @@ import FormProject from "./FormProject"
 
 export default function CreateProject(props) {
 
-	//----------------------------REDIRECTION APRES VALIDATION DU FORM-----------------------
+	//----------------------------REDIRECTION APRES VALIDATION DU FORM ou UNAUTHORIZED-----------------------
+
   const navigate = useNavigate();
+
   useEffect(() => { //si le composant a été updated d'une manière quelconque (state) alors ca s'execute
     if (project.project_is_created) {
       navigate('/Projects');
     }
+
+    // ----- Check if Admin AND redirect if not-------------
+    if (!props.isAdmin)
+    {
+        navigate('/Projects');
+    }
+
   });
 
   //--------------------------------- State Initial -------------------------------------
@@ -201,8 +210,7 @@ export default function CreateProject(props) {
 //----------------------------------------------------------- JSX -----------------------------------------------------
 
 	return (
-		<>
-			<App></App>
+
 			<FormProject
 				mode="create"
 				project= {project}
@@ -234,7 +242,6 @@ export default function CreateProject(props) {
 				saveProject = {saveProject}
 			>
 			</FormProject>
-		</>
 
 	);
 }

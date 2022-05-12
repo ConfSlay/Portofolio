@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link , useParams , useNavigate } from "react-router-dom";
 import ProjectDataService from "../../services/project.service";
+import AuthService from "../../services/auth.service";
 import App from "../../App"
 import Caroussel from "./Caroussel";
 
@@ -74,49 +75,55 @@ export default function GetOneProject(props) {
   }
 
   return (
-    <>
-      <App />
-      <div className="wrapper-discover">
-        <div className="box-discover">
+    <div className="wrapper-discover">
+      <div className="box-discover">
 
-          <div className="buttons-project"> {/* if is_granted('ROLE_ADMIN') */}
-            
+
+        { props.isAdmin ?
+
+          <div className="buttons-project"> 
+          
             <button className="deleteProjectButton-project alertDisplayerDelete_JS" 
               onClick={deleteProject.bind(this, project.project_id)}
-            >Delete project</button>  {/* CRSF TOKEN */} 
+            >Delete project</button> 
 
             <button className="updateProjectButton-project" 
               onClick={redirectToUpdate.bind(this, project.project_id)}
-            >Update project</button>  {/* CRSF TOKEN */}
+            >Update project</button> 
 
           </div> 
 
-          <span className="item-discover title-discover">{ project.project_name }</span>
+        :
+          null
+        }
 
-          <span className="item-discover tag-discover">{ project.project_technologies }</span>  
+        
 
-          <span className="item-discover description-discover">{ project.project_description }</span>
+        <span className="item-discover title-discover">{ project.project_name }</span>
 
-          
-          <Caroussel
-            loaded={loaded}
-            project={project}
-          >
-          </Caroussel>
+        <span className="item-discover tag-discover">{ project.project_technologies }</span>  
+
+        <span className="item-discover description-discover">{ project.project_description }</span>
+
+        
+        <Caroussel
+          loaded={loaded}
+          project={project}
+        >
+        </Caroussel>
 
 
-          { project.project_is_file_format === true ? 
-            <a className="item-discover link-project" 
-              href={ProjectDataService.getUploadsFiles+project.project_release_filename} 
-              download>Télécharger</a>
-          :
-            <a className="item-discover link-project" 
-              href={project.project_release_url} target="_blank">Lien</a>
-          }  
+        { project.project_is_file_format === true ? 
+          <a className="item-discover link-project" 
+            href={ProjectDataService.getUploadsFiles+project.project_release_filename} 
+            download>Télécharger</a>
+        :
+          <a className="item-discover link-project" 
+            href={project.project_release_url} target="_blank">Lien</a>
+        }  
 
-        </div>
-    </div>
-    </>
+      </div>
+  </div>
   );
 }
 

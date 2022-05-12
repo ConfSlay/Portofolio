@@ -1,8 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Link , useNavigate } from "react-router-dom";
-import logo from "./image/thunderParticle.png";
+import React, { useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import AuthService from "./services/auth.service";
 import "./App.css";
+import Base from "./Base";
+import Home from "./components/Home";
+import Login from "./components/Auth/Login";
+import Contact from "./components/Contact";
+import GetAllProject from "./components/Project/GetAllProject";
+import GetOneProject from "./components/Project/GetOneProject";
+import CreateProject from "./components/Project/CreateProject";
+import UpdateProject from "./components/Project/UpdateProject";
+import NotFound from "./components/NotFound";
+
 
 
 export default function App(props) {
@@ -35,76 +44,35 @@ export default function App(props) {
     const [redirect, setRedirect] = useState(false);
 
 
-    // ----- Component mount --------  
-    useEffect(()=>{ 
-        // ---- Menu burger Animation et Display des composants burger -----------
-        document.querySelector(".iconMenuBox").addEventListener('click', function() {
-            // Icon
-            document.querySelector(".icon-1").classList.toggle('a');
-            document.querySelector(".icon-2").classList.toggle('c');
-            document.querySelector(".icon-3").classList.toggle('b');
-
-            // Menu
-            if (document.querySelector(".burgerMenuBox").classList.contains('appearing')  
-                || document.querySelector(".burgerMenuBox").classList.contains('disappearing') )
-            {
-                document.querySelector(".burgerMenuBox").classList.toggle('disappearing');
-                document.querySelector(".burgerMenuBox").classList.toggle('appearing');
-            }
-            else
-            {
-                document.querySelector(".burgerMenuBox").classList.toggle('appearing');
-            }
-        });
-
-    },[]); //notice the empty array here so it only happens once when the component is up
-
     const logout = () => {
         AuthService.logout();
         setIsAdmin(false);
-        setRedirect(true);
+        if (props.page === 'CreateProject' || props.page === 'UpdateProject')
+        {
+            setRedirect(true);
+        }
+        
     };
 
 
     // ------------ JSX ------------------
     return (
       <>   
-        <div id="background"></div> 
+       <Base logout={logout} isAdmin={isAdmin} />
+       
+        {
+            {
+                'Home': <Home />,
+                'Login': <Login  />,
+                'Contact': <Contact />,
+                'GetAllProject': <GetAllProject isAdmin={isAdmin}/>,
+                'GetOneProject': <GetOneProject isAdmin={isAdmin}/>,
+                'CreateProject': <CreateProject isAdmin={isAdmin}/>,
+                'UpdateProject': <UpdateProject isAdmin={isAdmin}/>,
+                "NotFound" :  <NotFound />             
+            }[props.page]
+        }
+    </>
 
-        <div className="Header">
-            <Link className="leftBox" to="/">
-                <img className="itemLeftBox imageHeader" src={logo}></img> 
-                <span className="itemLeftBox titleHeader">
-                    <div className="titleHeader-top">Richard PERRET</div>
-                    <div className="hiding-titleHeader-bot">Richard PERRET</div>
-                    <div className="titleHeader-bot">Richard PERRET</div>
-                </span>
-            </Link>
-                                    {/* Version Mobile */}
-            {/* itemIconMenuBox */}
-            <div className="iconMenuBox">
-                <div className="icon-1"></div>
-                <div className="icon-2"></div>
-                <div className="icon-3"></div>
-            </div>
-
-            <div className="burgerMenuBox">    
-                <Link className="itemBugerMenuBox" to="/Projects">PROJETS</Link>
-                <Link className="itemBugerMenuBox" to="/Contact">CONTACT</Link>
-            </div>
-
-                                    {/* Version Desktop */}
-            <div className="linksBox">
-                <Link className="itemLinksBox blue" to="/Contact">CONTACT</Link>
-                <Link className="itemLinksBox" to="/Projects">PROJETS</Link> 
-            </div>         
-        </div>
-
-        { isAdmin === true ? 
-            <button class="logoutBubble" onClick={logout}>Déconnexion</button>
-        :
-            null
-        }   
-      </>
     );
 }

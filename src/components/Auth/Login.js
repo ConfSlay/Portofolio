@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect} from "react";
+import React, { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import App from "../../App";
 import AuthForm from "./AuthForm";
@@ -42,21 +42,18 @@ export default function Login(props) {
 
 	// ------------- JSX ---------------
   return (
-  	<>
-  		<App></App>
 
-    	<AuthForm
-				UsernameFieldName = "user_username"
-				UsernameFieldValue = {username}
-				OnChangeUsername = {OnChangeUsername}
-				PasswordFieldName = "user_password"
-				PasswordFieldValue = {password}
-				OnChangePassword = {OnChangePassword}
-				submitAuth = {submitAuth}
-				isValid = {isValid}
-				validationMessage = "Authentification failed">		
-      </AuthForm>
+  	<AuthForm
+			UsernameFieldName = "user_username"
+			UsernameFieldValue = {username}
+			OnChangeUsername = {OnChangeUsername}
+			PasswordFieldName = "user_password"
+			PasswordFieldValue = {password}
+			OnChangePassword = {OnChangePassword}
+			submitAuth = {submitAuth}
+			isValid = {isValid}
+			validationMessage = "Authentification failed">		
+    </AuthForm>
 
-    </>
   );
 }

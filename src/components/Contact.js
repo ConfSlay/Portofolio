@@ -6,7 +6,6 @@ export default function Contact(props) {
   return (
     <>
       <ContactParticles />
-      <App />
       <div className="wrapper-form">
         <div className="box-form">
 

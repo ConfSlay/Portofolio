@@ -6,33 +6,22 @@ import {
   Route,
 } from "react-router-dom";
 
-import Home from "./components/Home";
-import Login from "./components/Auth/Login";
-//import Logout from "./components/Auth/Logout";
-import Contact from "./components/Contact";
-import GetAllProject from "./components/Project/GetAllProject";
-import GetOneProject from "./components/Project/GetOneProject";
-import CreateProject from "./components/Project/CreateProject";
-import UpdateProject from "./components/Project/UpdateProject";
-import NotFound from "./components/NotFound";
-
-
+import App from "./App";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route exact path="/" element={<Home />} />
-      <Route path="/Login" element={<Login  />} />
-      <Route path="/Contact" element={<Contact />} />
-      <Route path="/Projects" element={<GetAllProject />} />
-      <Route path="/Project/:id" element={<GetOneProject />} />
-      <Route path="/Project/create" element={<CreateProject/>} />
-      <Route path="/Project/update/:id" element={<UpdateProject/>} /> 
-      <Route path="/404" element={<NotFound/>} />
-      <Route path="*" element={<NotFound/>} />
-
+      <Route exact path="/" element={<App page="Home" />} />
+      <Route path="/Login" element={<App page="Login"  />} />
+      <Route path="/Contact" element={<App page="Contact" />} />
+      <Route path="/Projects" element={<App page="GetAllProject" />} />
+      <Route path="/Project/:id" element={<App page="GetOneProject" />} />
+      <Route path="/Project/create" element={<App page="CreateProject" />} />
+      <Route path="/Project/update/:id" element={<App page="UpdateProject" />} />  
+      <Route path="/404" element={<App page="NotFound"/>} />
+      <Route path="*" element={<App page="NotFound"/>} />
     </Routes>
   </BrowserRouter> 
 ); //render l'argument 1 <JSX> dans l'argument 2 <root element>

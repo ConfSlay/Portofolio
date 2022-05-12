@@ -22,6 +22,12 @@ export default function UpdateProject(props) {
       setRemoveButtons();
     }
 
+    // ----- Check if Admin AND redirect if not-------------
+    if (!props.isAdmin)
+    {
+        navigate('/Projects');
+    }
+
   });
 
   //--------------------------------- State Initial -------------------------------------
@@ -275,8 +281,7 @@ export default function UpdateProject(props) {
 //----------------------------------------------------------- JSX -----------------------------------------------------
 
 	return (
-		<>
-			<App></App>
+
 			<FormProject
 				mode="update"
 				project= {project}
@@ -309,7 +314,6 @@ export default function UpdateProject(props) {
 				saveProject = {saveProject}
 			>
 			</FormProject>
-		</>
 
 	);
 }
