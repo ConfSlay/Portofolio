@@ -19,8 +19,9 @@ export default function Login(props) {
 
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const [isValid, setIsValid] = useState(true);
-	const [authentificated, setAuthentificated] = useState(false);
+	const [isValid, setIsValid] = useState(true); // Validation du form
+	const [authentificated, setAuthentificated] = useState(false); // Résultat Auth
+	const [disabledSubmit, setDisabledSubmit] = useState(false); // Bloquage du bouton submit durant process
 
 	// --------- Events -----------------------
 
@@ -29,14 +30,24 @@ export default function Login(props) {
 	const OnChangePassword = (e) => { setPassword(e.target.value);};
 
 	const submitAuth = async (e) => {
-		const Authentificated = await AuthService.login(username,password);
-		if (Authentificated) {
-			setIsValid(true);
-			setAuthentificated(true);
-		}	
-		else {
-			setIsValid(false);
-		}	
+		if (disabledSubmit === false) {
+			console.log("in");
+
+			setDisabledSubmit(true);
+			const Authentificated = await AuthService.login(username,password);
+
+			if (Authentificated) {
+				setIsValid(true);
+				setAuthentificated(true);
+			}	
+			else {
+				setIsValid(false);
+			}	
+
+			setDisabledSubmit(false);
+
+		}
+
 	};
 
 

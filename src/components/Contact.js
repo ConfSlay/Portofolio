@@ -1,8 +1,22 @@
-import React from "react"; //JSX
+import React, { useState , useEffect }  from "react"; //JSX
+import { useNavigate } from "react-router-dom";
 import App from "../App";
 import ContactParticles from "./particles/ContactParticles";
  
 export default function Contact(props) {
+
+  //---------------- STATE ----------------
+  const [disabledSubmit, setDisabledSubmit] = useState(false); // Bloquage du bouton submit durant process
+
+  const sendMessage = () => {
+    if (disabledSubmit === false){
+      setDisabledSubmit(true);
+      // DO STUFF
+      // ....
+      setDisabledSubmit(false);
+    }
+  };
+
   return (
     <>
       <ContactParticles />
@@ -19,8 +33,8 @@ export default function Contact(props) {
             <textarea className='textArea-form' placeholder='Hello Mr.PERRET,'></textarea>
           </div>
 
-          <input type="submit" className="item-form button-form" value="Send"/> 
-          {/* onclick={} */}
+          <input type="submit" className="item-form button-form" value="Send" onclick={sendMessage}></input> 
+           
 
         </div>      
       </div>

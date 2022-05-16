@@ -26,6 +26,8 @@ export default function CreateProject(props) {
 
   //--------------------------------- State Initial -------------------------------------
 
+  const [disabledSubmit, setDisabledSubmit] = useState(false); // Bloquage du bouton submit durant process
+
 	const [project,setProject] = useState( //déclare en tant que liste key/value
   { 
       project_name: "",
@@ -138,74 +140,81 @@ export default function CreateProject(props) {
 
  const saveProject = (e) => {
 
-    //------------- instanciation d'un objet FormData pour envoyer les données à l'API --------------   
-    let data = new FormData(); // --> "content" : "multipart/form-data"
-    data.append('project_name', project.project_name);
-    data.append('project_technologies', project.project_technologies);
-    data.append('project_description', project.project_description);
-    data.append('project_thumbnail_filename', project.project_thumbnail_filename);
+    if (disabledSubmit === false) {
+      setDisabledSubmit(true);
 
-    for (let i = 0; i < project.project_images.length; i++) { // images files
-      data.append(`project_images`, project.project_images[i]);
-    }    
+      //------------- instanciation d'un objet FormData pour envoyer les données à l'API --------------   
+      let data = new FormData(); // --> "content" : "multipart/form-data"
+      data.append('project_name', project.project_name);
+      data.append('project_technologies', project.project_technologies);
+      data.append('project_description', project.project_description);
+      data.append('project_thumbnail_filename', project.project_thumbnail_filename);
 
-    data.append('project_is_file_format', project.project_is_file_format);
-    data.append('project_release_filename', project.project_release_filename);
-    data.append('project_release_url', project.project_release_url);
+      for (let i = 0; i < project.project_images.length; i++) { // images files
+        data.append(`project_images`, project.project_images[i]);
+      }    
 
-    //--------------------------------- Request --------------------------------------
-    ProjectDataService.create(data)
-    .then(response => {
-      if (response.status === 200) {
-        console.log(response.data);
-        setProject(prevState => {
-          return { ...prevState, project_is_created : true }
-        });
-      }
-    })
-    .catch(e => {
-      if (e.response.status === 422) {
-        // Reset des states pour éviter que certains messages persistent même apres correction
-        setNameValidation({isValid : true, message : ""})
-        setTechnologiesValidation({isValid : true, message : ""})
-        setDescriptionValidation({isValid : true, message : ""})
-        setThumbnailValidation({isValid : true, message : ""})
-        setImagesValidation({isValid: true, message:""})
-        setReleaseFileValidation({isValid : true, message : ""})
-        setReleaseUrlValidation({isValid : true, message : ""}) 
-        // Gestion des erreurs et ajout au state error
-        e.response.data.errors.forEach(error => {
-          switch (error.param) { 
-            case "project_name":
-              setNameValidation({isValid : false, message : error.msg});
-              break;
-            case "project_technologies":
-              setTechnologiesValidation({isValid : false, message : error.msg});
-              break;
-            case "project_description":
-              setDescriptionValidation({isValid : false, message : error.msg});
-              break;
-            case "project_thumbnail_filename":
-              setThumbnailValidation({isValid : false, message : error.msg});
-              break;
-            case "project_images":
-              setImagesValidation({isValid : false, message : error.msg});
-              break;
-            case "project_release_filename":
-              setReleaseFileValidation({isValid : false, message : error.msg});
-              break;
-            case "project_release_url":
-              setReleaseUrlValidation({isValid : false, message : error.msg});
-              break;
-          }          
-        });
-      }
-      else 
-      {
-        //SWAL Server error
-      } 
-    });
-  }
+      data.append('project_is_file_format', project.project_is_file_format);
+      data.append('project_release_filename', project.project_release_filename);
+      data.append('project_release_url', project.project_release_url);
+
+      //--------------------------------- Request --------------------------------------
+      ProjectDataService.create(data)
+      .then(response => {
+        if (response.status === 200) {
+          console.log(response.data);
+          setProject(prevState => {
+            return { ...prevState, project_is_created : true }
+          });
+        }
+      })
+      .catch(e => {
+        if (e.response.status === 422) {
+          // Reset des states pour éviter que certains messages persistent même apres correction
+          setNameValidation({isValid : true, message : ""})
+          setTechnologiesValidation({isValid : true, message : ""})
+          setDescriptionValidation({isValid : true, message : ""})
+          setThumbnailValidation({isValid : true, message : ""})
+          setImagesValidation({isValid: true, message:""})
+          setReleaseFileValidation({isValid : true, message : ""})
+          setReleaseUrlValidation({isValid : true, message : ""}) 
+          // Gestion des erreurs et ajout au state error
+          e.response.data.errors.forEach(error => {
+            switch (error.param) { 
+              case "project_name":
+                setNameValidation({isValid : false, message : error.msg});
+                break;
+              case "project_technologies":
+                setTechnologiesValidation({isValid : false, message : error.msg});
+                break;
+              case "project_description":
+                setDescriptionValidation({isValid : false, message : error.msg});
+                break;
+              case "project_thumbnail_filename":
+                setThumbnailValidation({isValid : false, message : error.msg});
+                break;
+              case "project_images":
+                setImagesValidation({isValid : false, message : error.msg});
+                break;
+              case "project_release_filename":
+                setReleaseFileValidation({isValid : false, message : error.msg});
+                break;
+              case "project_release_url":
+                setReleaseUrlValidation({isValid : false, message : error.msg});
+                break;
+            }          
+          });
+        }
+        else 
+        {
+          //SWAL Server error
+        } 
+      });
+
+      setDisabledSubmit(false);
+    }
+  } 
+    
 
 //----------------------------------------------------------- JSX -----------------------------------------------------
 
