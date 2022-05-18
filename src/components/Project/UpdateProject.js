@@ -3,7 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import ProjectDataService from "../../services/project.service";
 //Components
 import App from "../../App";
-import FormProject from "./FormProject"
+import FormProject from "./FormProject";
+import ToastDisplayer from "../ToastDisplayer";
 
 export default function UpdateProject(props) {
 
@@ -238,9 +239,14 @@ export default function UpdateProject(props) {
           setProject(prevState => {
             return { ...prevState, project_is_updated : true }
           });
+          //SWAL
+          ToastDisplayer(false, "Project updated !");
         })
         .catch(e => {
           if (e.response.status === 422) {
+            //SWAL
+            ToastDisplayer(true, "Incorrect input");
+
             // Reset des states pour éviter que certains messages persistent même apres correction
             setNameValidation({isValid : true, message : ""})
             setTechnologiesValidation({isValid : true, message : ""})
@@ -278,7 +284,8 @@ export default function UpdateProject(props) {
           }
           else 
           {
-            //SWAL Server error
+            // SWAL
+            ToastDisplayer(true, "Internal server error ...");
           }  
         });
 

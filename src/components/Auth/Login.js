@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import App from "../../App";
 import AuthForm from "./AuthForm";
 import AuthService from "../../services/auth.service";
+import ToastDisplayer from "../ToastDisplayer";
 
 
 export default function Login(props) {
@@ -33,18 +34,19 @@ export default function Login(props) {
 		if (disabledSubmit === false) {
 			console.log("in");
 
-			setDisabledSubmit(true);
+			setDisabledSubmit(true); //Blocage du bouton
 			const Authentificated = await AuthService.login(username,password);
 
 			if (Authentificated) {
 				setIsValid(true);
 				setAuthentificated(true);
+				ToastDisplayer(false,"Hello senpai :) ");
 			}	
 			else {
 				setIsValid(false);
 			}	
 
-			setDisabledSubmit(false);
+			setDisabledSubmit(false); //déblocage du bouton
 
 		}
 

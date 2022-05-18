@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link , useParams , useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import ProjectDataService from "../../services/project.service";
 import AuthService from "../../services/auth.service";
-import App from "../../App"
+import App from "../../App";
+import ToastDisplayer from "../ToastDisplayer";
 import Caroussel from "./Caroussel";
 
 
@@ -63,15 +65,35 @@ export default function GetOneProject(props) {
   }
   
   const deleteProject = (id) => { 
-    //SWAL 
-    ProjectDataService.delete(id)      
-      .then(response => {
-        console.log(response.data);
-        setRedirect(true); //Redirection vers page virtuelle Project
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    //SWAL
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'Voulez-vous vraiment supprimer ce projet ?',
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: 'Oui',
+      cancelButtonText: "Non",
+      iconColor : 'rgb(232,16,41)',
+      confirmButtonColor: "rgb(232,16,41)",
+      cancelButtonColor: "rgb(61,61,61)",
+      background: 'rgb(33,33,33)',
+      color : 'rgb(255,255,255)'
+    }).then((result) => {
+     if (result.isConfirmed) {
+        //DELETE PROJECT  
+        ProjectDataService.delete(id)      
+        .then(response => {
+            console.log(response.data);
+            ToastDisplayer(false,"Project deleted !");
+            setRedirect(true); //Redirection vers page virtuelle Project
+        })
+        .catch(e => {
+            ToastDisplayer(true,"An error occured ...");
+            console.log(e);
+        });
+      }
+    });
   }
 
   return (

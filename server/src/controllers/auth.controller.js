@@ -33,7 +33,7 @@ exports.signin = async (req, res) => {
 
     //Signature du token que l'on va envoyer
     const token = jwt.sign({ id: user.id }, process.env.SESSION_SECRET_KEY, {
-      expiresIn: 1200, // 1200 sec soit 20 min
+      expiresIn: 3600, // 3600 sec soit 1 heure
     });
 
     req.session.token = token;

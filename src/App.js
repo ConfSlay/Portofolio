@@ -11,7 +11,7 @@ import GetOneProject from "./components/Project/GetOneProject";
 import CreateProject from "./components/Project/CreateProject";
 import UpdateProject from "./components/Project/UpdateProject";
 import NotFound from "./components/NotFound";
-
+import ToastDisplayer from "./components/ToastDisplayer";
 
 
 export default function App(props) {
@@ -51,6 +51,7 @@ export default function App(props) {
         {
             setRedirect(true);
         }
+        ToastDisplayer(false,"Goodbye senpai :( ");
         
     };
 
