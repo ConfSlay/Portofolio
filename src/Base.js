@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link , useNavigate } from "react-router-dom";
-import logo from "./image/thunderParticle.png";
+//import logo from "./image/thunderParticle.png";
+import logo from "./image/Thunder.svg";
+
 
 
 export default function App(props) {
@@ -27,8 +29,19 @@ export default function App(props) {
                 document.querySelector(".burgerMenuBox").classList.toggle('appearing');
             }
         });
-
     },[]); //notice the empty array here so it only happens once when the component is up
+
+    const menuBurgerDisappearing = () => {
+
+        // Fais disparaitre le defilement du menu burger à chaque clic sur un lien vu que c'est une SPA
+        //icon
+        document.querySelector(".icon-1").classList.toggle('a');
+        document.querySelector(".icon-2").classList.toggle('c');
+        document.querySelector(".icon-3").classList.toggle('b');
+        //menu
+        document.querySelector(".burgerMenuBox").classList.toggle('disappearing');
+        document.querySelector(".burgerMenuBox").classList.toggle('appearing');
+    };
 
 
 
@@ -46,8 +59,9 @@ export default function App(props) {
                     <div className="titleHeader-bot">Richard PERRET</div>
                 </span>
             </Link>
-                                    {/* Version Mobile */}
-            {/* itemIconMenuBox */}
+
+            {/* Version Mobile */}
+
             <div className="iconMenuBox">
                 <div className="icon-1"></div>
                 <div className="icon-2"></div>
@@ -55,19 +69,20 @@ export default function App(props) {
             </div>
 
             <div className="burgerMenuBox">    
-                <Link className="itemBugerMenuBox" to="/Projects">PROJETS</Link>
-                <Link className="itemBugerMenuBox" to="/Contact">CONTACT</Link>
+                <Link className="itemBugerMenuBox" to="/Projects"  onClick={menuBurgerDisappearing}>PROJECTS</Link>
+                <Link className="itemBugerMenuBox" to="/Contact"  onClick={menuBurgerDisappearing}>CONTACT</Link>
             </div>
 
-                                    {/* Version Desktop */}
+            {/* Version Desktop */}
+
             <div className="linksBox">
-                <Link className="itemLinksBox blue" to="/Contact">CONTACT</Link>
-                <Link className="itemLinksBox" to="/Projects">PROJETS</Link> 
+                <Link className="itemLinksBox" to="/Contact">CONTACT</Link>
+                <Link className="itemLinksBox" to="/Projects">PROJECTS</Link> 
             </div>         
         </div>
 
         { props.isAdmin === true ? 
-            <button class="logoutBubble" onClick={props.logout}>Déconnexion</button>
+            <button class="logoutBubble" onClick={props.logout}>Logout</button>
         :
             null
         }   

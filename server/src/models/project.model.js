@@ -17,6 +17,12 @@ module.exports = (sequelize, Sequelize) => {
     project_thumbnail_filename: {
       type: Sequelize.STRING
     },
+    project_is_youtube_not_images: {
+      type: Sequelize.BOOLEAN
+    },
+    project_youtube_link: {
+      type: Sequelize.STRING
+    },
     project_is_file_format: {
       type: Sequelize.BOOLEAN
     },

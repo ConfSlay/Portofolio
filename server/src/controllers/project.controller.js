@@ -20,6 +20,8 @@ exports.create = async (req, res) => {
       project_technologies : req.body.project_technologies,
       project_description : req.body.project_description,
       project_thumbnail_filename : req.files["project_thumbnail_filename"][0].filename,
+      project_is_youtube_not_images : req.body.project_is_youtube_not_images,
+      project_youtube_link : req.body.project_is_youtube_not_images === "true" ?  req.body.project_youtube_link : "",
       project_is_file_format : req.body.project_is_file_format,
       project_release_filename : req.body.project_is_file_format === "true" ? //file needed or not     
         req.files["project_release_filename"][0].filename
@@ -34,17 +36,21 @@ exports.create = async (req, res) => {
       return res.status(500).send({message: "an error has occurred while creating the Project"});
     }
     
-    //Project Images
-    req.files["project_images"].forEach( async function(image){
-      try {
-        const dataProjectImages = await ProjectImage.create({
-          project_image_filename : image.filename,            
-          projectProjectId  : dataProject.project_id //ce nom horrible est généré par sequelize, ca fait chier, j'avais pas 3h à perdre pour changer ça
-        });
-      } catch (err) {
-        return res.status(500).send("Error while saving images");
-      }
-    });
+    //Project Images if !youtube
+    if (req.body.project_is_youtube_not_images === "false") 
+    {
+      req.files["project_images"].forEach( async function(image){
+        try {
+          const dataProjectImages = await ProjectImage.create({
+            project_image_filename : image.filename,            
+            projectProjectId  : dataProject.project_id //ce nom horrible est généré par sequelize, ca fait chier, j'avais pas 3h à perdre pour changer ça
+          });
+        } catch (err) {
+          return res.status(500).send("Error while saving images");
+        }
+      });
+    }
+
 
     return res.status(200).send(dataProject);
 
@@ -112,6 +118,8 @@ exports.update = async (req, res) => {
       project_technologies : req.body.project_technologies,
       project_description : req.body.project_description,
       project_thumbnail_filename :  "",
+      project_is_youtube_not_images : req.body.project_is_youtube_not_images,
+      project_youtube_link : req.body.project_is_youtube_not_images === "true" ?  req.body.project_youtube_link : "",
       project_is_file_format : req.body.project_is_file_format,
       project_release_filename : null, 
       project_release_url : req.body.project_is_file_format === "false" ? req.body.project_release_url : ""
@@ -132,7 +140,7 @@ exports.update = async (req, res) => {
     }
 
     //-------- update Images Files ? -------------
-    if (req.body.project_images_updated === "true") //update des images
+    if (req.body.project_is_youtube_not_images === "false" && req.body.project_images_updated === "true") //update des images
     {         
        myOldProject.project_images.forEach(async image => {
         //suppression anciens images files dans storage
@@ -153,6 +161,21 @@ exports.update = async (req, res) => {
           projectProjectId  : myOldProject.project_id 
         });
       });
+    }
+    else if (req.body.project_is_youtube_not_images === "true") { //passage de images à youtube
+      if (myOldProject.project_is_youtube_not_images === false) 
+      {
+        myOldProject.project_images.forEach(async image => {
+          //suppression anciens images files dans storage
+          let file;
+          file = image.project_image_filename;
+          fs.unlink(path.join(directory, file), err => {
+            if (err) throw err;
+          });
+          //suppression anciens images in db
+          const destroyImages = await ProjectImage.destroy({where: { projectProjectId: id} });  
+        });
+      }
     }
 
     //---- Update RELEASE file ?--------
@@ -229,11 +252,14 @@ exports.delete = async (req, res) => {
     
 
     //Project Images files
-    myOldProject.project_images.forEach( async function(image) {
-      //Delete file
-      file = image.project_image_filename;
-      fs.unlink(path.join(directory, file), err => {if (err) throw err;});
-    });
+    if (myOldProject.project_is_youtube_not_images === false) {
+      myOldProject.project_images.forEach( async function(image) {
+        //Delete file
+        file = image.project_image_filename;
+        fs.unlink(path.join(directory, file), err => {if (err) throw err;});
+      });
+    }
+
 
     //Release if true
     if (myOldProject.project_is_file_format === true) {

@@ -5,6 +5,7 @@ import ProjectDataService from "../../services/project.service";
 import AuthService from "../../services/auth.service";
 import App from "../../App";
 import ToastDisplayer from "../ToastDisplayer";
+import ButtonWithBorder from "./ButtonWithBorder";
  
 export default function GetAllProject(props) {
 
@@ -35,7 +36,7 @@ export default function GetAllProject(props) {
     Swal.fire({
       position: 'center',
       icon: 'warning',
-      title: 'Voulez-vous vraiment supprimer ce projet ?',
+      title: 'Do you really want to delete this project ?',
       showCancelButton: true,
       showConfirmButton: true,
       confirmButtonText: 'Oui',
@@ -103,8 +104,12 @@ export default function GetAllProject(props) {
             className="image-project" 
             src={ProjectDataService.getUploadsFiles+project.project_thumbnail_filename}>
           </img>
-   
-          <Link className="link-project" to={"/Project/" + project.project_id}>See More</Link>
+          
+          <ButtonWithBorder 
+            ButtonValue = "Discover"
+            ButtonTo={"/Project/" + project.project_id}
+            isInApp={true}>
+          </ButtonWithBorder>
           
         </div>
 

@@ -1,10 +1,10 @@
-@keyframes lightning{
+/*@keyframes lightning{
   1.5625%{opacity: 1}
   3.125%{opacity :0}
   4.6875%{opacity:  1}
   75%{opacity: 1}
   0%,100%{opacity: 0}
-}
+}*/
 
 .shake{
   transition : 500ms;

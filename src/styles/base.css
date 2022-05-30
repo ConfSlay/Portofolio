@@ -48,18 +48,6 @@ html {  /* pour determiner une police par défaut de la page*/
   animation-iteration-count: infinite; /* When the animation is finished, start again */ 
 }
 
-    /*
-    background: linear-gradient(90deg, rgba(140,136,148,1) 5%, rgba(247,239,239,1) 85%);
-    text-shadow: none;
-    background-clip: text;
-    text-decoration: none;
-    color: transparent;*/
-
-  /*text-decoration: none;
-  color: transparent;  
-  text-shadow: none;
-  background: linear-gradient(90deg, rgba(224,67,132,1) 0%, rgba(92,90,213,1) 80%);
-  background-clip: text;*/
 
 .titleHeader-top{
   position: relative;
@@ -104,7 +92,6 @@ html {  /* pour determiner une police par défaut de la page*/
 .logoutBubble:hover {
   border: none;
   background-color: rgba(60,60,60,1);
-  /*background: linear-gradient(0deg, rgba(140,136,148,1) 5%, rgba(247,239,239,1) 85%);*/
   color: red; 
 }
 
@@ -115,37 +102,6 @@ html {  /* pour determiner une police par défaut de la page*/
 @media (orientation: landscape) {
   .Header {
     height: 5vw; /* 1 viewport width unit = 1% veiwport width */
-  }
-
-  .Header a:hover {
-    background: rgba(60,60,60,1);
-    transition-duration: 500ms;
-    text-shadow: none;
-    color : white;
-    padding: 0.1vw 1vw;
-    border-radius: 1vw;
-  }
-
-/*s'applique à tous les enfants de classe titleHeader contenu dans un [a] (pendant hover), 
-lui même appartenant étant un élément [div] enfant d'un élément de classe titleHeader */
-  .Header a:hover > .titleHeader > div{ 
-    color: rgb(240,240,240);
-    text-shadow:
-      -1px -1px 0 rgb(92,90,213),
-      1px -1px 0 rgb(224,67,132),
-      -1px 1px 0 rgb(92,90,213),
-      1px 1px 0 rgb(224,67,132);
-  }
-
-  .Header a:hover > .titleHeader > .hiding-titleHeader-bot{ 
-    text-shadow:none;
-    color: transparent;
-    background: rgba(60,60,60,1);
-    transition-duration: 500ms;
-  }
-
-  .Header a {
-    transition-duration: 500ms; /* hover off */
   }
 
   .leftBox {
@@ -160,7 +116,7 @@ lui même appartenant étant un élément [div] enfant d'un élément de classe 
 
   .titleHeader > div {
     font-size: 2.5vw;/* 1 viewport width unit = 1% veiwport width */
-    letter-spacing: 0.25vw;
+    letter-spacing: 0.1vw;
     word-spacing:0.25vw;
   }
 
@@ -204,18 +160,23 @@ lui même appartenant étant un élément [div] enfant d'un élément de classe 
   }
 
   .itemLinksBox{
+    transition-duration: 500ms;
     color: rgba(150,150,150,1);
     font-size: 2vw;/* 1 viewport width unit = 1% veiwport width */
-    letter-spacing: 0.2vw;
     margin-right: 3vw;
   }
 
   .itemLinksBox:hover{
-    text-shadow:
-      -1px -1px 0 rgb(92,90,213),
-      1px -1px 0 rgb(224,67,132),
-      -1px 1px 0 rgb(92,90,213),
-      1px 1px 0 rgb(224,67,132) !important; /* to override the big header rule for <a> node */
+    background: rgba(60,60,60,1);   
+    text-shadow: none;
+    color : #CFC3C3;
+    padding: 0.1vw 1vw;
+    border-radius: 0.5vw;   
+    /*text-shadow:
+      -0.1px -1px 0 #525D96,
+      1px -1px 0 #525D96,
+      -1px 1px 0 #525D96,
+      1px 1px 0 #525D96; */
   }
 
   .iconMenuBox{

@@ -66,23 +66,55 @@ export default function FormProject(props) {
           onResetEvent={props.onResetProject_thumbnail_filename}
           fieldValue={props.project.project_thumbnail_filename}>
         </FileInput>
-       
-      {/*--------------------------------------------- Images Field--------------------------------------*/}
-          <FileInput 
-            isMultiFile={true}
-            labelName="Images"
-            fieldName="project_images"
-            onChangeEvent={props.onChangeProject_images}
-            isValid={props.imagesValidation.isValid}
-            validationMessage={props.imagesValidation.message}
-            isRemovable={props.removeImagesPossibility}
-            onResetEvent={props.onResetProject_images}
-            fieldValue={props.project.project_images}>
-          </FileInput>
 
-      {/*--------------------------------------- Format Select------------------------------------------------*/}
+      {/*--------------------------------------- Format Select Release ------------------------------------------------*/}
         <div className="item-form">
-          <div className="label-form">Format</div>
+          <div className="label-form">Content Format</div>
+          <select 
+            className='FormatChoice_JS'
+            id="project_is_file_format"  
+            value={props.project.project_is_youtube_not_images} 
+            onChange={props.onChangeProject_is_youtube_not_images} 
+            name="project_is_youtube_not_images">
+              <option value="true">Youtube Video</option>
+              <option value="false">Carrousel & Images</option>
+          </select>
+        </div> 
+       
+      {/*--------------------------------------------- Content Format Youtube or Images Carrousel --------------------------------------*/}
+
+          { props.project.project_is_youtube_not_images === false ?
+
+            <FileInput 
+              isMultiFile={true}
+              labelName="Images for Carrousel"
+              fieldName="project_images"
+              onChangeEvent={props.onChangeProject_images}
+              isValid={props.imagesValidation.isValid}
+              validationMessage={props.imagesValidation.message}
+              isRemovable={props.removeImagesPossibility}
+              onResetEvent={props.onResetProject_images}
+              fieldValue={props.project.project_images}>
+            </FileInput>
+
+          :
+
+            <TextInput 
+              multiline = {false}
+              small = {false}
+              labelName="Youtube Link"
+              fieldName="project_youtube_link"
+              fieldValue={props.project.project_youtube_link} 
+              onChangeEvent={props.onChangeProject_youtube_link}
+              isValid={props.youtubeLinkValidation.isValid}
+              validationMessage={props.youtubeLinkValidation.message}>
+            </TextInput>
+            
+          }
+
+      {/*--------------------------------------- Format Select Release ------------------------------------------------*/}
+        <div className="item-form">
+          <div className="label-form">Release Format</div>
           <select 
             className='FormatChoice_JS'
             id="project_is_file_format"  

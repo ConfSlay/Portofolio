@@ -35,6 +35,8 @@ export default function CreateProject(props) {
       project_technologies: "",
       project_description: "",
       project_thumbnail_filename: null,
+      project_is_youtube_not_images : true,
+      project_youtube_link : "",
       project_images: [],
       project_is_file_format: true,
       project_release_filename: null,
@@ -58,6 +60,11 @@ export default function CreateProject(props) {
   })
 
   const [thumbnailValidation, setThumbnailValidation] = useState({
+    isValid : true,
+    message : ""
+  })
+
+  const [youtubeLinkValidation, setYoutubeLinkValidation] = useState({
     isValid : true,
     message : ""
   })
@@ -100,6 +107,28 @@ export default function CreateProject(props) {
   const onChangeProject_thumbnail_filename = (e) => {
     setProject(prevState => {
       return { ...prevState, project_thumbnail_filename : e.target.files[0] } //pcq c'est un fichier
+    });
+  }
+
+  const onChangeProject_is_youtube_not_images = (e) => {
+    let result = true; 
+    //si on passe e.target.value, project_is_file_format pointera sur un objet et non une valeur
+    // du coup setState n'aura plus d'incidence
+    if (e.target.value === "true")
+    {
+      result = true;
+    }
+    else {
+      result = false;
+    }
+    setProject(prevState => {
+      return { ...prevState, project_is_youtube_not_images : result }
+    });
+  }
+
+  const onChangeProject_youtube_link = (e) => {
+    setProject(prevState => {
+      return { ...prevState, project_youtube_link : e.target.value } 
     });
   }
 
@@ -150,11 +179,14 @@ export default function CreateProject(props) {
       data.append('project_technologies', project.project_technologies);
       data.append('project_description', project.project_description);
       data.append('project_thumbnail_filename', project.project_thumbnail_filename);
-
-      for (let i = 0; i < project.project_images.length; i++) { // images files
-        data.append(`project_images`, project.project_images[i]);
-      }    
-
+      data.append('project_is_youtube_not_images', project.project_is_youtube_not_images);
+      data.append('project_youtube_link', project.project_youtube_link);
+      if (project.project_is_youtube_not_images === false)
+      {
+        for (let i = 0; i < project.project_images.length; i++) { // images files
+          data.append(`project_images`, project.project_images[i]);
+        }
+      }
       data.append('project_is_file_format', project.project_is_file_format);
       data.append('project_release_filename', project.project_release_filename);
       data.append('project_release_url', project.project_release_url);
@@ -176,17 +208,15 @@ export default function CreateProject(props) {
       .catch(e => {
         if (e.response.status === 422) {
 
-          //SWAL
-          ToastDisplayer(true, "Incorrect input");
-
           // Reset des states pour éviter que certains messages persistent même apres correction
-          setNameValidation({isValid : true, message : ""})
-          setTechnologiesValidation({isValid : true, message : ""})
-          setDescriptionValidation({isValid : true, message : ""})
-          setThumbnailValidation({isValid : true, message : ""})
-          setImagesValidation({isValid: true, message:""})
-          setReleaseFileValidation({isValid : true, message : ""})
-          setReleaseUrlValidation({isValid : true, message : ""}) 
+          setNameValidation({isValid : true, message : ""});
+          setTechnologiesValidation({isValid : true, message : ""});
+          setDescriptionValidation({isValid : true, message : ""});
+          setThumbnailValidation({isValid : true, message : ""});
+          setYoutubeLinkValidation({isValid : true, message : ""});
+          setImagesValidation({isValid: true, message:""});
+          setReleaseFileValidation({isValid : true, message : ""});
+          setReleaseUrlValidation({isValid : true, message : ""}) ;
           // Gestion des erreurs et ajout au state error
           e.response.data.errors.forEach(error => {
             switch (error.param) { 
@@ -201,6 +231,9 @@ export default function CreateProject(props) {
                 break;
               case "project_thumbnail_filename":
                 setThumbnailValidation({isValid : false, message : error.msg});
+                break;
+              case "project_youtube_link":
+                setYoutubeLinkValidation({isValid : false, message : error.msg});
                 break;
               case "project_images":
                 setImagesValidation({isValid : false, message : error.msg});
@@ -238,6 +271,8 @@ export default function CreateProject(props) {
 	  		onChangeProject_technologies = {onChangeProject_technologies}
 	  		onChangeProject_description = {onChangeProject_description}
 	  		onChangeProject_thumbnail_filename = {onChangeProject_thumbnail_filename}
+        onChangeProject_is_youtube_not_images = {onChangeProject_is_youtube_not_images}
+        onChangeProject_youtube_link = {onChangeProject_youtube_link}
 	  		onChangeProject_images = {onChangeProject_images}
 	  		onChangeProject_is_file_format = {onChangeProject_is_file_format}
 	  		onChangeProject_release_filename = {onChangeProject_release_filename}
@@ -254,6 +289,7 @@ export default function CreateProject(props) {
 				technologiesValidation = {technologiesValidation}
 				descriptionValidation = {descriptionValidation}
 				thumbnailValidation = {thumbnailValidation}
+        youtubeLinkValidation = {youtubeLinkValidation}
 				imagesValidation = {imagesValidation}
 				releaseFileValidation = {releaseFileValidation}
 				releaseUrlValidation = {releaseUrlValidation}

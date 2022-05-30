@@ -2,6 +2,10 @@ import React, { useState , useEffect }  from "react"; //JSX
 import { useNavigate } from "react-router-dom";
 import App from "../App";
 import ContactParticles from "./particles/ContactParticles";
+import linkedinLogo from "../image/icons/Linkedin.svg";
+import githubLogo from "../image/icons/Github.svg" ;
+import sendIcon from "../image/icons/sendIcon.svg" ;
+import border from "../image/border.svg" ;
  
 export default function Contact(props) {
 
@@ -17,27 +21,46 @@ export default function Contact(props) {
     }
   };
 
+  const goToSocial = (e) => {
+    switch (e) {
+      case "linkedin":
+        window.open("https://www.linkedin.com/in/richardperret/", "_blank") //LinkedIn
+        break;
+      case "github":
+        window.open("https://github.com/ConfSlay", "_blank") //Github
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
-    <>
-      <ContactParticles />
-      <div className="wrapper-form">
-        <div className="box-form">
+    <div className="content-container">
 
-          <div className="item-form">
-            <div className="label-form">Email</div> 
-            <input type="text" className='textFields-form small' placeholder='johndoe@mail.com'></input>
-          </div>
+      <img src={border} className="border-top-left"></img>
+      <img src={border} className="border-bot-right"></img>
 
-          <div className="item-form">
-            <div className="label-form">Message</div>
-            <textarea className='textArea-form' placeholder='Hello Mr.PERRET,'></textarea>
-          </div>
-
-          <input type="submit" className="item-form button-form" value="Send" onclick={sendMessage}></input> 
-           
-
-        </div>      
+      <div className="title-container">
+        <div className="title grey">WANT TO GET</div>
+        <div className="title blue">IN TOUCH ?</div>
       </div>
-    </>
+
+      <div className="box-form-contact">
+        <img className="button-form-contact" src={sendIcon} onClick={sendMessage}></img>
+        <div className="title-form-contact">Send me a message</div>
+        <input type="text" className='textFields-form-contact' placeholder='Name'></input>
+        <input type="text" className='textFields-form-contact' placeholder='Email'></input>
+        <textarea className='textArea-form-contact' placeholder='Message'></textarea>           
+      </div>    
+
+      <div className="social-container">
+        <div className="linkedin-container" onClick={() => {goToSocial("linkedin")} } >
+          <img src={linkedinLogo}></img>
+        </div>
+        <div className="github-container" onClick={() => {goToSocial("github")} } >
+          <img src={githubLogo}></img>
+        </div>
+      </div>  
+    </div>
   );
 }

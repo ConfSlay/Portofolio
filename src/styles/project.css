@@ -13,6 +13,8 @@
   grid-column: 1;
   grid-row: auto;
   border-radius: 20px;
+  align-content: center;
+  align-items: center;
 }
 
 .item-discover{ /* flexbox's childs */
@@ -21,7 +23,9 @@
 
 .title-discover{
   text-align: center;
-  color : white;
+  background: linear-gradient(to bottom, #E1DDDD, #B4B1B1);
+  background-clip: text;
+  color: transparent;
 }
 
 .tag-discover{
@@ -58,7 +62,7 @@
   .wrapper-discover { /* grid */
     top : 6vw;
     grid-row-gap: 2vw;
-    padding-bottom: 2vw; 
+    padding-bottom: 1vw; 
   }
 
   .box-discover{ /* flexbox */
@@ -68,11 +72,13 @@
   .item-discover{ /* flexbox's childs */
     margin-bottom: 1vw;
     margin-top: 1vw;
+    padding-bottom: 5vw;
   }
 
   .title-discover{
     font-size: 2vw;
     letter-spacing: 0.2vw;
+    padding-bottom: 2vw;
   }
 
   .tag-discover{
@@ -85,11 +91,23 @@
     word-spacing: 0.1vw;
     margin-bottom: 1vw;
     width: 80vw;
+
+    margin: 1vw 0vw;
+    padding : 1vw 2vw;
+    border-left: 0.3vw solid;
+    border-right: 0.3vw solid;
+    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10
   }
 
   .caroussel-discover{
     align-self: center;
     width:50vw;
+  }
+
+  .youtube-discover{
+    width:50vw;
+    height: 28.125vw;
+    border : none;
   }
 
   .button-discover{
@@ -110,7 +128,7 @@
   .wrapper-discover { /* grid */
     top : 15vw;
     grid-row-gap: 4vw;
-    padding-bottom: 4vw;
+    padding-bottom: 2vw;
   }
 
   .box-discover{ /* flexbox */
@@ -120,6 +138,7 @@
   .item-discover{ /* flexbox's childs */
     margin-bottom: 2vw;
     margin-top: 2vw;
+    padding-bottom: 10vw;
   }
 
   .title-discover{
@@ -135,11 +154,23 @@
   .description-discover{
     font-size: 3vw;
     word-spacing: 0.1vw;
+
+    margin: 2vw 0vw;
+    padding : 2vw 4vw;
+    border-left: 0.6vw solid;
+    border-right: 0.6vw solid;
+    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
   }
 
   .caroussel-discover{
     align-self: center;
     width: 80vw;
+  }
+
+  .youtube-discover{
+    width:80vw;
+    height: 45vw;
+    border : none;
   }
 
   .button-discover{

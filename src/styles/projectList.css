@@ -10,7 +10,6 @@
   flex-direction : column;
   grid-row: auto;
   background-color: rgba(33,33,33,1);
-  border: 1px solid rgb(50,50,50);
 }
 
 .buttons-project{
@@ -56,8 +55,15 @@
   align-self: center;
 }
 
+.button-border-project{
 
+}
 
+.button-text-project{
+
+}
+
+/*
 .link-project{
   text-decoration: none;
   color : white;
@@ -70,11 +76,11 @@
   background-color: rgba(80,80,80,1);
   color: white;
   cursor: pointer;  
-}
+}*/
 
 .buttonAdd-project{
   grid-column: 1/3;
-  font-family: 'Century Gothic';
+  font-family: Futura , Segoe UI , Tahoma, Trebuchet MS, Arial, sans-serif;
   color: white;
   text-decoration: none;
   background-color: rgba(60,60,60,1);
@@ -99,11 +105,14 @@
   }
 
   .item-project{
+    position: relative;
     grid-column: auto;
+    grid-row-gap: 1vw;
     padding : 2vw;
-    width: 40vw;
-    border-radius: 10px;
-    margin-bottom: 5vw;
+    width: 35vw;
+    border: 0.2vw solid;
+    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
+    margin-bottom: 3vw;
   }
 
 
@@ -119,6 +128,9 @@
   .title-project{
     font-size: 2vw;
     letter-spacing: 0.2vw;
+    background: linear-gradient(to bottom, #E1DDDD, #B4B1B1);
+    background-clip: text;
+    color: transparent;
   }
 
   .tag-project{
@@ -126,20 +138,61 @@
     word-spacing: 0.5vw;
   }
 
-
   .image-project{
     width: 20vw;
-    padding: 1vw;
+    padding-bottom: 3vw;
   }
 
-  .link-project{
-    bottom: 0vw;
-    font-size: 1.5vw;
-    position :relative;
-    margin-top:  auto; /* marge caculée automatiquement en fonction de la position de l'élément et par rapport à son conteneur */
-    padding: 0.4vw;
-    border-radius: 1vw
+  .button-container-project{
+    text-decoration: none;
+    position: relative;
+    align-self: center;
+    width: 13vw;
+    height : 3vw;
   }
+
+  .button-border-project{
+    position: absolute;
+    bottom: 0vw;
+    width : 13vw;
+    height : 3vw;
+    align-self: center;
+    background: transparent;
+    border: 0.2vw solid;
+    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
+  }
+
+  .button-text-project{
+    text-decoration: none;
+    font-size: 2vw;
+    color: rgba(150,150,150,1);
+    text-align: center;
+  }
+
+  .button-container-project:hover > .button-text-project{
+    color : #CFC3C3;
+  }
+
+  .button-border-project-bot-left{
+    transition: 250ms;
+    transform : translate(0.2vw,-0.2vw);
+  }
+
+  .button-border-project-top-right{
+    transition: 250ms;
+    transform : translate(-0.2vw,0.2vw);
+  }
+
+  .button-container-project:hover > .button-border-project-bot-left{
+    transition: 250ms;
+    transform : translate(0.3vw,-0.3vw);
+  }
+
+  .button-container-project:hover > .button-border-project-top-right{
+    transition: 250ms;
+    transform : translate(-0.3vw,0.3vw);
+  }
+
 
   .buttonAdd-project{
     font-size: 1.5vw;
@@ -163,10 +216,13 @@
   }
 
   .item-project{
+    position: relative;
     grid-column: 1/2;
+    grid-row-gap: 2vw;
     padding : 3vw;
     width: 60vw;
-    border-radius: 10px;
+    border: 0.45vw solid;
+    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
     margin-bottom: 10vw;
   }
 
@@ -192,14 +248,43 @@
   .image-project{
     margin: 2vw 0; /*marge en haut et en bas*/
     width: 40vw;
+    padding-bottom: 2vw;
   }
 
-  .link-project{
-    font-size: 3vw;
-    margin-top: 2vw;
-    padding: 0.8vw;
-    border-radius: 2vw
+  .button-container-project{
+    text-decoration: none;
+    position: relative;
+    align-self: center;
+    width: 26vw;
+    height : 6vw;
   }
+
+  .button-border-project{
+    position: absolute;
+    bottom: 0vw;
+    width : 26vw;
+    height : 6vw;
+    align-self: center;
+    background: transparent;
+    border: 0.4vw solid;
+    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
+  }
+
+  .button-text-project{
+    text-decoration: none;
+    font-size: 4vw;
+    color: rgba(150,150,150,1);
+    text-align: center;
+  }
+
+  .button-border-project-bot-left{
+    transform : translate(0.4vw,-0.4vw);
+  }
+
+  .button-border-project-top-right{
+    transform : translate(-0.4vw,0.4vw);
+  }
+
 
   .buttonAdd-project{
     font-size: 3vw;

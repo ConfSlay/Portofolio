@@ -13,6 +13,7 @@ exports.projectValidation = [
     check('project_technologies', 'Technologies are required').not().isEmpty(),
     check('project_description', 'Description is required').not().isEmpty(),
     check('project_release_url', 'Project url is required').if(check('project_is_file_format').equals('false')).not().isEmpty(),
+    check('project_youtube_link', 'Youtube embeded url is required').if(check('project_is_youtube_not_images').equals('true')).not().isEmpty(),
 
   //---------------Files Validation----------------------   
   (req, res, next) => {
@@ -30,21 +31,22 @@ exports.projectValidation = [
     }
 
     //---------Images Files Validation-------------
-    // Si pas de fichier, et pas de nom de fichier, alors c'est une erreur. 
-    // Create = fichier
-    // Upload = fichier ou nom de fichier si 0 modifs
-    if( (req.files["project_images"] === undefined && req.body.project_images_updated === "true" && req.method === "PUT")
-      || (req.files["project_images"] === undefined && req.method === "POST") ){
+    const isYoutube = req.body.project_is_youtube_not_images; //file needed or not  
+    if( isYoutube === "false" && (
+        (req.files["project_images"] === undefined && req.body.project_images_updated === "true" && req.method === "PUT")
+        || (req.files["project_images"] === undefined && req.method === "POST") )
+      )
+    {
       // Format similaire à express-validator comme ça c'est homogène pour le front React
       errors.push({"param" : "project_images", "msg" : "No file selected"});
     }
 
     //---------Release File Validation-------------
-    const needed = req.body.project_is_file_format; //file needed or not
+    const isFileFormat = req.body.project_is_file_format; //file needed or not
     // Si pas de fichier, et pas de nom de fichier, alors c'est une erreur. 
     // Create = fichier
     // Upload = fichier ou nom de fichier si 0 modifs
-    if( needed === "true" && req.files["project_release_filename"] === undefined && req.body.project_release_filename === "null"){
+    if( isFileFormat === "true" && req.files["project_release_filename"] === undefined && req.body.project_release_filename === "null"){
       // Format similaire à express-validator comme ça c'est homogène pour le front React
       errors.push({"param" : "project_release_filename", "msg" : "No file selected"});
     }

@@ -6,7 +6,7 @@ import AuthService from "../../services/auth.service";
 import App from "../../App";
 import ToastDisplayer from "../ToastDisplayer";
 import Caroussel from "./Caroussel";
-
+import ButtonWithBorder from "./ButtonWithBorder";
 
 export default function GetOneProject(props) {
 
@@ -69,7 +69,7 @@ export default function GetOneProject(props) {
     Swal.fire({
       position: 'center',
       icon: 'warning',
-      title: 'Voulez-vous vraiment supprimer ce projet ?',
+      title: 'Do you really want to delete this project ?',
       showCancelButton: true,
       showConfirmButton: true,
       confirmButtonText: 'Oui',
@@ -121,27 +121,46 @@ export default function GetOneProject(props) {
 
         
 
-        <span className="item-discover title-discover">{ project.project_name }</span>
-
-        <span className="item-discover tag-discover">{ project.project_technologies }</span>  
+        <div className="item-discover"> 
+          <div className="title-discover">{ project.project_name }</div>
+          <div className="tag-discover">{ project.project_technologies }</div>  
+        </div>
 
         <span className="item-discover description-discover">{ project.project_description }</span>
 
-        
-        <Caroussel
-          loaded={loaded}
-          project={project}
-        >
-        </Caroussel>
+        { project.project_is_youtube_not_images === false ? 
+          <Caroussel
+            loaded={loaded}
+            project={project}
+          >
+          </Caroussel>
+
+        :
+
+          <iframe 
+            className="youtube-discover item-discover" 
+            src={project.project_youtube_link} 
+            title="YouTube video player" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        }
 
 
         { project.project_is_file_format === true ? 
-          <a className="item-discover link-project" 
-            href={ProjectDataService.getUploadsFiles+project.project_release_filename} 
-            download>Télécharger</a>
+          <ButtonWithBorder 
+            ButtonValue = "Download"
+            ButtonTo={ProjectDataService.getUploadsFiles+project.project_release_filename}
+            isInApp={false}
+            isDownload={true}>
+          </ButtonWithBorder>
         :
-          <a className="item-discover link-project" 
-            href={project.project_release_url} target="_blank">Lien</a>
+          <ButtonWithBorder 
+            ButtonValue = "Link"
+            ButtonTo={project.project_release_url}
+            isInApp={false}
+            isDownload={false}>
+          </ButtonWithBorder>
         }  
 
       </div>
