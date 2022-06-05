@@ -1,0 +1,64 @@
+
+.name-container-notFound{
+  font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;
+  font-weight: 500;
+  display: flex;
+  text-align: center;
+}
+
+.blue-notFound {
+  background: linear-gradient(to bottom, #545869, #3A4EB3);
+  background-clip: text;
+  color: transparent;
+}
+
+.grey-notFound { 
+  background: linear-gradient(to bottom, #CFC3C3, #373131);
+  background-clip: text;
+  color: transparent;
+}
+
+
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------DESKTOP----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+
+@media (orientation: landscape){
+
+  .name-container-notFound{
+    flex-direction: row;
+    font-size: 8vw;
+    letter-spacing: 0.1vw;
+  }
+
+  .blue-notFound {
+    padding: 2vw;
+  }
+
+  .grey-notFound {
+    padding: 2vw;
+  }
+
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+/*------------------------------------------------MOBILE-----------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+
+@media (orientation: Portrait){
+
+  .name-container-notFound{
+    flex-direction: column;
+    font-size: 16vw;
+    letter-spacing: 0.2vw;
+  }
+
+  .blue-notFound {
+    padding: 2vw;
+  }
+
+  .grey-notFound {
+    padding: 2vw;
+  }
+
+}  

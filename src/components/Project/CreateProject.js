@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import ProjectDataService from "../../services/project.service";
 //Components
-import App from "../../App";
 import FormProject from "./FormProject";
 import ToastDisplayer from "../ToastDisplayer";
 

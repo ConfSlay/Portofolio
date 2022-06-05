@@ -88,8 +88,9 @@ exports.authValidation = [
 
 exports.contactValidation = [
     //pas besoin de (req,res,next) pcq ce sont déjà des middleware (qu'on appelle dans notre middleware)
-     check('contact_email', "Valid email is required").isEmail(),
-     check('contact_message', 'Message must be 20 or more characters').isLength({ min: 20 }), 
+     check('mail_name', 'Name must be 3 or more characters').isLength({ min: 3 }),
+     check('mail_email', "Valid email is required").isEmail(),
+     check('mail_message', 'Message must be 20 or more characters').isLength({ min: 20 }), 
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())

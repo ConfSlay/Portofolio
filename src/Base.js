@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link , useNavigate } from "react-router-dom";
-//import logo from "./image/thunderParticle.png";
 import logo from "./image/Thunder.svg";
 
 
@@ -53,11 +52,16 @@ export default function App(props) {
         <div className="Header">
             <Link className="leftBox" to="/">
                 <img className="itemLeftBox imageHeader" src={logo}></img> 
-                <span className="itemLeftBox titleHeader">
-                    <div className="titleHeader-top">Richard PERRET</div>
-                    <div className="hiding-titleHeader-bot">Richard PERRET</div>
-                    <div className="titleHeader-bot">Richard PERRET</div>
-                </span>
+                { props.page === "Home" ?
+                    null
+                :
+                    <span className="itemLeftBox titleHeader">
+                        <div className="titleHeader-top">Richard PERRET</div>
+                        <div className="hiding-titleHeader-bot">Richard PERRET</div>
+                        <div className="titleHeader-bot">Richard PERRET</div>
+                    </span>
+                }
+
             </Link>
 
             {/* Version Mobile */}

@@ -58,6 +58,7 @@ app.get(/^((?!\/api\/).)*$/, (req, res) => {
 // Routes API
 require("./src/routes/project.routes")(app); 
 require("./src/routes/auth.routes")(app);
+require("./src/routes/contact.routes")(app);
 
 
 // Set Port, Listen for Requests

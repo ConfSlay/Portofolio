@@ -4,7 +4,7 @@ import type { Engine } from "tsparticles-engine";
 import { loadFull } from "tsparticles";
 
 
-export default function ContactParticles(props: unknown) {
+export default function DustParticles(props: unknown) {
   // this customizes the component tsParticles installation
   const customInit = useCallback(async (engine: Engine) => {
     // this adds the bundle to tsParticles

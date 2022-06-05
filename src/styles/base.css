@@ -83,17 +83,17 @@ html {  /* pour determiner une police par défaut de la page*/
   border: none;
   position: fixed;
   z-index: 20;
-  background: rgba(232, 16, 41, 0.8);
-  color : white; 
+  color : rgb(232, 16, 41);
+  background : rgba(24, 24, 24, 1);
   cursor : pointer;
   text-decoration: none;
 }
 
 .logoutBubble:hover {
-  border: none;
-  background-color: rgba(60,60,60,1);
-  color: red; 
+  background: rgb(232, 16, 41);
+  color : white;
 }
+
 
 
 /*-----------------------------------------------------------------------------------------------*/
@@ -160,23 +160,19 @@ html {  /* pour determiner une police par défaut de la page*/
   }
 
   .itemLinksBox{
-    transition-duration: 500ms;
+    transition-duration: 400ms;
     color: rgba(150,150,150,1);
     font-size: 2vw;/* 1 viewport width unit = 1% veiwport width */
     margin-right: 3vw;
   }
 
   .itemLinksBox:hover{
-    background: rgba(60,60,60,1);   
+    /*background: rgba(60,60,60,1);   */
     text-shadow: none;
     color : #CFC3C3;
-    padding: 0.1vw 1vw;
-    border-radius: 0.5vw;   
-    /*text-shadow:
-      -0.1px -1px 0 #525D96,
-      1px -1px 0 #525D96,
-      -1px 1px 0 #525D96,
-      1px 1px 0 #525D96; */
+    padding: 0.2vw 0.5vw;
+    border-bottom: 0.2vw solid;
+    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10
   }
 
   .iconMenuBox{
@@ -192,7 +188,8 @@ html {  /* pour determiner une police par défaut de la page*/
     left: 1vw;
     font-size: 1.5vw;
     padding: 0.5vw;
-    border-radius: 1vw;
+    border: 0.2vw solid;
+    border-color: rgb(232, 16, 41);
   }
 
 }
@@ -337,8 +334,9 @@ html {  /* pour determiner une police par défaut de la page*/
   .logoutBubble {
     bottom: 2vw;
     left: 2vw;
-    font-size: 3vw;
+    font-size: 6vw;
     padding: 1vw;
-    border-radius: 2vw;
+    border: 0.4vw solid;
+    border-color:  rgb(232, 16, 41);
   }
 }

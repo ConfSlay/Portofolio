@@ -59,7 +59,7 @@ export default function App(props) {
     // ------------ JSX ------------------
     return (
       <>   
-       <Base logout={logout} isAdmin={isAdmin} />
+       <Base logout={logout} isAdmin={isAdmin} page={props.page} />
        
         {
             {

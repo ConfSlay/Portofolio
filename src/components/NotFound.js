@@ -6,7 +6,10 @@ export default function NotFound(props) {
   return (
 
       <div className="wrapper-form">
-        <img className="not-found-image" src={logo}></img>
+        <div className="name-container-notFound">
+          <div className="grey-notFound">NOT</div>
+          <div className="blue-notFound">FOUND</div>
+        </div>
       </div>
 
   );

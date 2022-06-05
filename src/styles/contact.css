@@ -13,7 +13,7 @@
 }
 
 .grey { 
-  background: linear-gradient(to bottom, #E1DDDD, #B4B1B1);
+  background: linear-gradient(to bottom, #CFC3C3, #373131);
   background-clip: text;
   color: transparent;
 }
@@ -27,6 +27,16 @@
 .social-container > div:hover {
   cursor : pointer;
 }
+
+.social-container > div:hover > img{
+  cursor : pointer;
+  filter : saturate(30%);
+}
+
+.social-container > div > img {
+  filter : saturate(0%);
+}
+
 
 .box-form-contact{ /* flexbox */
   display: flex;
@@ -66,6 +76,12 @@
 
 .button-form-contact{
   z-index: 10;
+  filter : saturate(0%);
+}
+
+.button-form-contact:hover{
+  filter : saturate(60%);
+  cursor: pointer;
 }
 
 
@@ -112,7 +128,7 @@
     top : 2vw;
 
     border: 0.3vw solid;
-    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10
+    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
   }
 
   .github-container{
@@ -122,7 +138,7 @@
     top: 1vw;
 
     border: 0.3vw solid;
-    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10
+    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
   }
 
   .box-form-contact{ /* flexbox */
@@ -216,8 +232,7 @@
 
   .social-container > div {
     background: none;
-    /*border: 0.6vw solid;
-    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10*/
+    margin-bottom: 5vw;
   }
 
   .box-form-contact{ /* flexbox */

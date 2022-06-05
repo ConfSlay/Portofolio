@@ -1,5 +1,58 @@
+.wrapper-home{
+	position : absolute;
+	display : grid;
+	justify-items: center;
+	align-items: center;
+    left: 0vw;
+	width : 100%;
+}
 
+.name-container{
+  font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
 
+.blue-home {
+  background: linear-gradient(to bottom, #545869, #3A4EB3);
+  background-clip: text;
+  color: transparent;
+}
+
+.grey-home { 
+  background: linear-gradient(to bottom, #CFC3C3, #373131);
+  background-clip: text;
+  color: transparent;
+}
+
+.logo-home{
+
+}
+
+.intro-container{
+}
+
+.text-intro{
+	text-align: justify;
+  text-justify: inter-word;
+	color: rgb(170, 160, 160); /*rgb(207, 195, 195)*/
+}
+
+.picture-intro{
+
+}
+
+.techno-container{
+	display : flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.techno-image{
+	filter: saturate(80%);
+}
 
 
 /*-----------------------------------------------------------------------------------------------*/
@@ -7,6 +60,61 @@
 /*-----------------------------------------------------------------------------------------------*/
 
 @media (orientation: landscape){
+
+	.wrapper-home{
+		top: 5vw;
+		grid-template-columns: 1fr 10vw 1fr ;
+		grid-template-rows: 1fr 5vw;
+	    grid-column-gap: 0vw;
+	    grid-row-gap: 2vw;
+	}
+
+	.name-container{
+		grid-column: 1/2;
+		grid-row: 1/2;
+		font-size: 8vw;
+		letter-spacing: 0.1vw;
+	}
+
+	.blue-home{
+		transform : translate(-1vw,-2vw);
+	}
+
+	.logo-home{
+		width : 2vw;
+		grid-column: 2/3;
+		grid-row: 1/2;	
+	}
+
+	.intro-container{
+		grid-column: 3/4;
+		grid-row: 1/2;
+		font-size: 1.5vw;
+		border-top: 0.3vw solid;
+		border-bottom: 0.3vw solid;
+    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
+	}
+
+	.text-intro{
+		width: 25vw;
+	}
+
+	.picture-intro{
+		width: 10vw;
+		opacity : 0.8;
+	}
+
+	.techno-container{
+		bottom: 2vw;
+		grid-column: span 3;
+		grid-row: 2/3;
+	}
+
+	.techno-image{
+		height: 3.5vw;
+		padding-left: 1.5vw;
+		padding-right: 1.5vw;
+	}
 
 }
 
@@ -16,4 +124,44 @@
 
 @media (orientation: Portrait){
 
+	.wrapper-home{
+		top: 15vw;
+	}
+
+	.name-container{
+		
+	}
+
+	.blue-home{
+		transform : translate(-1vw,-2vw);
+	}
+
+	.logo-home{
+		width : 2vw;
+		grid-column: 2/3;
+		grid-row: 1/2;	
+	}
+
+	.intro-container{
+
+	}
+
+	.text-intro{
+
+	}
+
+	.picture-intro{
+		
+	}
+
+	.techno-container{
+		bottom: 4vw;
+		flex-wrap: wrap;
+	}
+
+	.techno-image{
+		height: 7vw;
+		padding-left: 3vw;
+		padding-right: 3vw;
+	}
 }
