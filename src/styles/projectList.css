@@ -52,7 +52,9 @@
 
 .title-project{
   text-align: center;
-  color : white;
+  background: linear-gradient(to bottom, #E1DDDD, #B4B1B1);
+  background-clip: text;
+  color: transparent;
 }
 
 .tag-project{
@@ -126,9 +128,6 @@
   .title-project{
     font-size: 2vw;
     letter-spacing: 0.2vw;
-    background: linear-gradient(to bottom, #E1DDDD, #B4B1B1);
-    background-clip: text;
-    color: transparent;
   }
 
   .tag-project{
@@ -219,86 +218,86 @@
     grid-column: 1/2;
     grid-row-gap: 2vw;
     padding : 3vw;
-    width: 60vw;
-    border: 0.45vw solid;
+    width: 80vw; /*60vw*/
+    border: 0.6vw solid;/*0.45vw*/
     border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
     margin-bottom: 10vw;
   }
 
   .buttons-project > button {
     margin : 1vw;
-    font-size: 3vw;
+    font-size: 4.5vw;/*3vw*/
     word-spacing: 0.3vw;
     margin-bottom: 2vw;
     padding: 1vw;
   }
 
   .deleteProjectButton-project{
-    border: 0.4vw solid;
+    border: 0.6vw solid;/*0.4vw*/
     border-color:  rgb(232, 16, 41);
   }
 
   .updateProjectButton-project{
-    border: 0.4vw solid;
+    border: 0.6vw solid;/*0.4vw*/
     border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
   }
 
   .title-project{
-    font-size: 6vw;
+    font-size: 9vw;/*6vw*/
     letter-spacing: 0.1vw;
   }
 
   .tag-project{
-    font-size: 3vw;
+    font-size: 4.5vw;/*3vw*/
     word-spacing: 1vw;
   }
 
   .image-project{
-    margin: 2vw 0; /*marge en haut et en bas*/
-    width: 40vw;
-    padding-bottom: 2vw;
+    margin: 3vw 0; /*2vw*/ /*marge en haut et en bas*/
+    width: 60vw;/*40vw*/
+    padding-bottom: 3vw; /*2vw*/
   }
 
   .button-container-project{
     text-decoration: none;
     position: relative;
     align-self: center;
-    width: 26vw;
-    height : 6vw;
+    width: 39vw;/*26vw*/
+    height : 9vw;/*6vw*/
   }
 
   .button-border-project{
     position: absolute;
     bottom: 0vw;
-    width : 26vw;
-    height : 6vw;
+    width : 39vw;/*26vw*/
+    height : 9vw;/*6vw*/
     align-self: center;
     background: transparent;
-    border: 0.4vw solid;
+    border: 0.6vw solid; /*0.4vw*/
     border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
   }
 
   .button-text-project{
     text-decoration: none;
-    font-size: 4vw;
+    font-size: 6vw;/*4vw*/
     color: rgba(150,150,150,1);
     text-align: center;
   }
 
   .button-border-project-bot-left{
-    transform : translate(0.4vw,-0.4vw);
+    transform : translate(0.6vw,-0.6vw); /*translate(0.4vw,-0.4vw);*/
   }
 
   .button-border-project-top-right{
-    transform : translate(-0.4vw,0.4vw);
+    transform : translate(-0.6vw,0.6vw);  /*translate(-0.4vw,0.4vw);*/
   }
 
 
   .buttonAdd-project{
-    font-size: 3vw;
+    font-size: 4.5vw; /*3vw*/
     margin-bottom: 10vw;
     padding: 1vw;
-    border: 0.4vw solid;
+    border: 0.6vw solid; /*0.4vw*/
     border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
   }
 }

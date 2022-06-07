@@ -215,7 +215,7 @@
   }
 
   .title-container {
-    padding-top: 10vw;
+    marging-top: 5vw;
     font-size: 8vw;
   }
 
@@ -226,8 +226,9 @@
   }
 
   .social-container img { /* les descendants (pas enfants direct) d'un élément de classe social-container */
-    width: 12vw;
-    padding: 1vw;
+    width: 15vw;
+    padding : 1vw;
+    margin-bottom: 5vw;
   }
 
   .social-container > div {
@@ -244,14 +245,14 @@
   }
 
   .title-form-contact{
-    font-size: 4vw;
+    font-size: 6vw;
     padding-bottom: 3vw;
   }
 
   .textFields-form-contact{
     padding : 2vw;
     width: 75vw;
-    font-size: 4vw; /* 1 viewport min between width and height unit = 1% veiwport min */
+    font-size: 6vw; /* 1 viewport min between width and height unit = 1% veiwport min */
     word-spacing: 0.2vw;
     margin-bottom: 0.4vw;
   }
@@ -259,7 +260,7 @@
   .textArea-form-contact{
     padding : 2vw;
     border: none;
-    font-size: 4vw;
+    font-size: 6vw;
     word-spacing: 0.2vw;
     width: 75vw;
     height: 30vw;
@@ -269,8 +270,8 @@
   .button-form-contact{
     position: absolute; /*relative mais en le retirant du flux*/
     top: 3vw;
-    left: 72vw;
-    width: 5vw;
+    left: 70vw;
+    width: 8vw;
   }
 
 
@@ -282,7 +283,7 @@
   }
 
   .border-bot-right{
-    position: fixed;
+    position: absolute;
     width: 25vw;
     bottom: 0vw;
     right:  0vw;

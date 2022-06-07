@@ -126,7 +126,7 @@ export default function GetOneProject(props) {
           <div className="tag-discover">{ project.project_technologies }</div>  
         </div>
 
-        <span className="item-discover description-discover">{ project.project_description }</span>
+        <div className="item-discover description-discover">{ project.project_description }</div>
 
         { project.project_is_youtube_not_images === false ? 
           <Caroussel

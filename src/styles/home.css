@@ -32,6 +32,8 @@
 }
 
 .intro-container{
+	align-items: center;
+	display : flex;
 }
 
 .text-intro{
@@ -41,7 +43,7 @@
 }
 
 .picture-intro{
-
+	opacity : 0.8;
 }
 
 .techno-container{
@@ -52,6 +54,7 @@
 
 .techno-image{
 	filter: saturate(80%);
+
 }
 
 
@@ -62,11 +65,11 @@
 @media (orientation: landscape){
 
 	.wrapper-home{
-		top: 5vw;
+		top: 10vw;
 		grid-template-columns: 1fr 10vw 1fr ;
 		grid-template-rows: 1fr 5vw;
-	    grid-column-gap: 0vw;
-	    grid-row-gap: 2vw;
+	  grid-column-gap: 0vw;
+	  grid-row-gap: 2vw;
 	}
 
 	.name-container{
@@ -87,6 +90,8 @@
 	}
 
 	.intro-container{
+		padding:0vw 1vw 0vw 1vw; /* padding left right */
+		flex-direction: row;
 		grid-column: 3/4;
 		grid-row: 1/2;
 		font-size: 1.5vw;
@@ -100,12 +105,12 @@
 	}
 
 	.picture-intro{
+		padding-left: 2vw;
 		width: 10vw;
-		opacity : 0.8;
 	}
 
 	.techno-container{
-		bottom: 2vw;
+		padding-top: 10vw;
 		grid-column: span 3;
 		grid-row: 2/3;
 	}
@@ -125,11 +130,19 @@
 @media (orientation: Portrait){
 
 	.wrapper-home{
-		top: 15vw;
+		top: 25vw;
+		grid-template-columns: 5vw 1fr 5vw ;
+		grid-template-rows: auto;
+	  grid-row-gap: 5vw;
 	}
 
 	.name-container{
-		
+		text-align: center;
+		grid-column: 2/3;
+		grid-row: 1/2;
+		font-size: 20vw;
+		letter-spacing: 0.1vw;
+		margin-bottom: 45vw;
 	}
 
 	.blue-home{
@@ -137,13 +150,19 @@
 	}
 
 	.logo-home{
-		width : 2vw;
-		grid-column: 2/3;
-		grid-row: 1/2;	
+		display: none;
 	}
 
 	.intro-container{
-
+		padding:4vw 4vw 4vw 4vw; /* padding left right */
+		flex-direction: column;
+		grid-column: 2/3;
+		grid-row: 2/3;
+		font-size: 5vw;
+		border-top: 0.6vw solid;
+		border-bottom: 0.6vw solid;
+    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
+    margin-bottom: 5vw;
 	}
 
 	.text-intro{
@@ -151,17 +170,22 @@
 	}
 
 	.picture-intro{
-		
+		position: absolute;
+		top: 59vw;
+		left: 30vw;
+		width: 40vw;	
 	}
 
 	.techno-container{
-		bottom: 4vw;
+		margin-bottom: 5vw;
+		align-self: center;
+		grid-column: 2/3;
+		grid-row: 3/4;
 		flex-wrap: wrap;
 	}
 
 	.techno-image{
-		height: 7vw;
-		padding-left: 3vw;
-		padding-right: 3vw;
+		height: 12vw;
+		padding : 4vw;
 	}
 }

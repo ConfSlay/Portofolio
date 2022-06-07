@@ -202,43 +202,30 @@ html {  /* pour determiner une police par défaut de la page*/
   }
 
   .leftBox {   
-    height: 15vw; 
+    height: 15vw;
+    text-align: center; 
   }  
 
   .titleHeader{
-    height: 5vw;
     padding-left: 2vw; 
   }
   
   .titleHeader > div {
-    font-size: 5vw;/* 1 viewport width unit = 1% veiwport width */
+    font-size: 6vw;/* 1 viewport width unit = 1% veiwport width */
     letter-spacing: 0.2vw;
     word-spacing:0.5vw;
   
   }
 
   .titleHeader-top{
-    height:  2.5vw;
-    line-height: 5vw;
-
-    animation: top_anim-mobile 10s; /* Start the shake animation and make the animation last for x seconds  */
-    animation-iteration-count: infinite; /* When the animation is finished, start again */ 
-    animation-timing-function: linear;    
   }
 
   .hiding-titleHeader-bot{
-    top: -2.5vw;
-    height:  2.5vw;
+    display: none;
   }
 
   .titleHeader-bot{
-    top: -2.5vw;
-    height:  2.5vw;
-    line-height: 0vw;
-
-    animation: bot_anim-mobile 10s; /* Start the shake animation and make the animation last for x seconds  */
-    animation-iteration-count: infinite; /* When the animation is finished, start again */ 
-    animation-timing-function: linear;            
+    display: none;
   }
 
   .imageHeader {

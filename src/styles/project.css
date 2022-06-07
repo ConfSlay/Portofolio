@@ -125,39 +125,39 @@
 @media (orientation: Portrait) {
 
   .wrapper-discover { /* grid */
-    top : 15vw;
-    grid-row-gap: 4vw;
+    top : 15vw;/*15vw*/
+    grid-row-gap: 6vw;/*4vw*/
     padding-bottom: 2vw;
   }
 
   .box-discover{ /* flexbox */
-    padding: 2vw 4vw; /* 2 top/bot 4 left/right */
+    padding: 4vw 4vw;/*2vw*/  /* 2 top/bot 4 left/right */ 
   }
 
   .item-discover{ /* flexbox's childs */
-    margin-bottom: 2vw;
-    margin-top: 2vw;
-    padding-bottom: 10vw;
+    margin-bottom: 6vw;/*2vw*/
+    margin-top: 6vw;/*2vw*/
   }
 
   .title-discover{
-    font-size: 6vw;
+    font-size: 9vw;/*6vw*/
     letter-spacing: 0.1vw;
   }
 
   .tag-discover{
-    font-size: 3vw;
+    font-size: 4.5vw;/*3vw*/
     word-spacing: 1vw;
   }
 
   .description-discover{
-    font-size: 3vw;
+    font-size: 4.5vw;/*3vw*/
     word-spacing: 0.1vw;
 
-    margin: 2vw 0vw;
     padding : 2vw 4vw;
-    border-left: 0.6vw solid;
-    border-right: 0.6vw solid;
+    border-left: 0.9vw solid;/*0.6vw solid;*/
+    border-right: 0.9vw solid;/*0.6vw solid;*/
+    border-top : none;
+    border-bottom: none;
     border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
   }
 
@@ -170,14 +170,7 @@
     width:80vw;
     height: 45vw;
     border : none;
+    margin-bottom: 12vw;
   }
 
-  .button-discover{
-    font-size: 4vw;
-    word-spacing: 0.4vw;
-    margin-top: 2vw;
-    padding: 1vw;
-    border: 0.6vw solid;
-    border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10;
-  }
 }

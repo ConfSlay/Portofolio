@@ -24,7 +24,7 @@ export default function Home(props) {
       <img className="logo-home" src={logo}></img>
 
       <div className="intro-container">
-        <div className="text-intro">Im a fullstack developper based in Paris. I love to create complex applications with beautiful user’s interface.</div>
+        <div className="text-intro">Full-stack engineer looking for his first professional experience in web development</div>
         <img className="picture-intro" src={profilePicture}></img>
       </div>
 
