@@ -36,11 +36,12 @@
 .description-discover{
   text-align : justify;
   color : white;
+  line-height: 200%;
 }
 
 .button-discover{
   align-self: center;
-  font-family: 'Century Gothic';
+  font-family: var(--font-secondary);
   z-index: 10;
   border: 1px solid rgb(50,50,50);
   color : white;
@@ -70,30 +71,28 @@
   }
 
   .item-discover{ /* flexbox's childs */
-    margin-bottom: 1vw;
-    margin-top: 1vw;
-    padding-bottom: 5vw;
+    margin-top : 1vw;
+    margin-bottom: 2vw;
   }
 
   .title-discover{
     font-size: 2vw;
     letter-spacing: 0.2vw;
-    padding-bottom: 2vw;
+    padding-bottom: 1.5vw;
   }
 
   .tag-discover{
     font-size: 1.5vw;
     word-spacing: 0.5vw;
+    margin-bottom: 3vw;
   }
 
   .description-discover{
     font-size: 1.25vw;
     word-spacing: 0.1vw;
-    margin-bottom: 1vw;
-    width: 80vw;
-
-    margin: 1vw 0vw;
-    padding : 1vw 2vw;
+    width: 65vw;
+    margin-bottom: 5vw !important;
+    padding : 1vw 4vw;
     border-left: 0.3vw solid;
     border-right: 0.3vw solid;
     border-image: linear-gradient(to bottom, #545869, #3A4EB3) 10
@@ -102,17 +101,18 @@
   .caroussel-discover{
     align-self: center;
     width:50vw;
+    margin-bottom: 5vw !important;
   }
 
   .youtube-discover{
     width:50vw;
     height: 28.125vw;
     border : none;
+    margin-bottom: 5vw !important;
   }
 
   .button-discover{
     font-size: 2vw;
-    margin-top: 1vw;
     word-spacing: 0.3vw;
     padding: 0.5vw;
   }

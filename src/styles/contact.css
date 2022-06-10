@@ -1,6 +1,6 @@
 
 .title-container {
-  font-family: Futura , Segoe UI , Tahoma, Trebuchet MS, Arial, sans-serif;
+  font-family: var(--font-secondary);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,14 +49,14 @@
 }
 
 .title-form-contact{
-  font-family: Futura , Segoe UI , Tahoma, Trebuchet MS, Arial, sans-serif;
+  font-family: var(--font-secondary);
   color : rgb(190, 190, 190);
 }
 
 .textFields-form-contact{
   margin: 0vw;
   border: none;
-  font-family: Futura , Segoe UI , Tahoma, Trebuchet MS, Arial, sans-serif;
+  font-family: var(--font-secondary);
   z-index: 10;
   color: black;
   background-color: rgb(190, 190, 190);
@@ -67,7 +67,7 @@
   margin: 0vw;
   border: none;
   resize: none;
-  font-family: Futura , Segoe UI , Tahoma, Trebuchet MS, Arial, sans-serif;
+  font-family: var(--font-secondary);
   z-index: 10;
   color: black;
   background-color: rgb(190, 190, 190);

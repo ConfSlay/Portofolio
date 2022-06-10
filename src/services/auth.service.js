@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = process.env.REACT_APP_API_URL + "/auth/";
+const API_URL = process.env.REACT_APP_API_URL + "/api/auth/";
 
 const login = async (username, password) => {
 

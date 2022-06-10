@@ -17,13 +17,13 @@ export default function ButtonWithBorder(props) {
     <>
       { props.isDownload === true ?
 
-        <a className="button-container-project" href={props.ButtonTo}>
+        <a className={ "button-container-project "+props.classname } href={props.ButtonTo}>
           <div className="button-border-project button-border-project-bot-left"></div>
           <div className="button-border-project button-border-project-top-right"></div>
           <div className="button-text-project" >{props.ButtonValue}</div>
         </a>
       :
-        <a className="button-container-project" href={props.ButtonTo} target="_blank">
+        <a className={ "button-container-project "+props.classname } href={props.ButtonTo} target="_blank">
           <div className="button-border-project button-border-project-bot-left"></div>
           <div className="button-border-project button-border-project-top-right"></div>
           <div className="button-text-project" >{props.ButtonValue}</div>

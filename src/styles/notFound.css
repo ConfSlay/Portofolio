@@ -1,6 +1,6 @@
 
 .name-container-notFound{
-  font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;
+  font-family: var(--font-secondary);
   font-weight: 500;
   display: flex;
   text-align: center;

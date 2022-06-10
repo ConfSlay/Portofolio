@@ -96,7 +96,7 @@ export default function GetAllProject(props) {
           }
    
 
-          <span className="title-project">{project.project_name}</span>
+          <span className="title-project"><b>{project.project_name}</b></span>
 
           <span className="tag-project">{project.project_technologies}</span>
 
@@ -106,6 +106,7 @@ export default function GetAllProject(props) {
           </img>
           
           <ButtonWithBorder 
+            classname = ""
             ButtonValue = "Discover"
             ButtonTo={"/Project/" + project.project_id}
             isInApp={true}>

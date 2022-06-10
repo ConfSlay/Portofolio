@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300&display=swap');
+@import url('http://fonts.cdnfonts.com/css/century-gothic');
+
+:root {
+--font-primary: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;;
+--font-primary-fallback: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;
+--font-secondary: 'Jost', sans-serif;
+--font-secondary-fallback: Futura , Segoe UI , Tahoma, Trebuchet MS, Arial, sans-serif !important;
+}

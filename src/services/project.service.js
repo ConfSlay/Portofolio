@@ -7,23 +7,23 @@ const http = axios.create({
 class ProjectDataService {
 
   get getUploadsFiles() {
-    return "http://localhost:3006/uploads/";
+    return "/uploads/";
   } 
   
   getAll() {
-    return http.get("/Projects");
+    return http.get("/api/Projects");
   }
   get(id) {
-    return http.get(`/Projects/${id}`);
+    return http.get(`/api/Projects/${id}`);
   }
   create(data) {
-    return http.post("/Projects", data);
+    return http.post("/api/Projects", data);
   }
   update(id, data) {
-    return http.put(`/Projects/${id}`, data);
+    return http.put(`/api/Projects/${id}`, data);
   }
   delete(id) {
-    return http.delete(`/Projects/${id}`);
+    return http.delete(`/api/Projects/${id}`);
   }
 
 }

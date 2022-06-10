@@ -3,7 +3,7 @@
 * { min-height: 0; min-width: 0; } /* pour fix un bug de react-slick avec les container flex */
 
 html {  /* pour determiner une police par défaut de la page*/
-  font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;
+  font-family: var(--font-secondary);
   font-weight: 500;
   margin: 0 !important;
   padding: 0 !important;
@@ -50,6 +50,7 @@ html {  /* pour determiner une police par défaut de la page*/
 
 
 .titleHeader-top{
+  font-family:  var(--font-primary);
   position: relative;
   background: linear-gradient(90deg, rgba(140,136,148,1) 5%, rgba(247,239,239,1) 85%);
   text-shadow: none;
@@ -61,6 +62,7 @@ html {  /* pour determiner une police par défaut de la page*/
 }
 
 .hiding-titleHeader-bot{
+  font-family:  var(--font-primary);
   position: relative;
   background: rgba(33,33,33,1);
   color: transparent;
@@ -68,6 +70,7 @@ html {  /* pour determiner une police par défaut de la page*/
 }
 
 .titleHeader-bot{
+  font-family:  var(--font-primary);
   position: relative;
   background: linear-gradient(90deg, rgba(140,136,148,1) 5%, rgba(247,239,239,1) 85%);
   text-shadow: none;
@@ -160,6 +163,7 @@ html {  /* pour determiner une police par défaut de la page*/
   }
 
   .itemLinksBox{
+    font-family:  var(--font-primary);
     transition-duration: 400ms;
     color: rgba(150,150,150,1);
     font-size: 2vw;/* 1 viewport width unit = 1% veiwport width */
@@ -308,6 +312,7 @@ html {  /* pour determiner une police par défaut de la page*/
   }
 
   .itemBugerMenuBox{
+    font-family:  var(--font-primary);
     width: 36vw;/* 1 viewport height unit = 1% veiwport height */
     height: 8vw;/* 1 viewport height unit = 1% veiwport height */
     font-size: 6vw;

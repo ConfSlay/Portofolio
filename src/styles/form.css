@@ -32,7 +32,7 @@
 }
 
 .textFields-form{
-  font-family: 'Century Gothic';
+  font-family: var(--font-secondary);
   z-index: 10;
   color: black;
   border: 1px solid rgb(55,55,55);
@@ -41,7 +41,7 @@
 
 .textArea-form{
   resize: none;
-  font-family: 'Century Gothic';
+  font-family: var(--font-secondary);
   z-index: 10;
   color: black;
   background-color: white;
@@ -54,7 +54,7 @@
 
 .button-form{
   align-self: center;
-  font-family: 'Century Gothic';
+  font-family: var(--font-secondary);
   text-decoration: none;
   z-index: 10;
   color : #CFC3C3;   
@@ -80,12 +80,12 @@ input[type=file]::file-selector-button { /* select le bouton file upload */
   background-color: rgba(60,60,60,1);
   border: 1px solid rgb(50,50,50);
   color: white;
-  font-family: 'Century Gothic';
+  font-family: var(--font-secondary);
 }
 
 input[type='file'] { /* select le message à côté*/
   color:white;
-  font-family: 'Century Gothic';
+  font-family: var(--font-secondary);
 }
 
 .file-box{

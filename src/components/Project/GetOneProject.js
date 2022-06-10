@@ -122,7 +122,7 @@ export default function GetOneProject(props) {
         
 
         <div className="item-discover"> 
-          <div className="title-discover">{ project.project_name }</div>
+          <div className="title-discover"><b>{project.project_name}</b></div>
           <div className="tag-discover">{ project.project_technologies }</div>  
         </div>
 
@@ -150,6 +150,7 @@ export default function GetOneProject(props) {
         { project.project_is_file_format === true ? 
           <ButtonWithBorder 
             ButtonValue = "Download"
+            classname = "item-discover"
             ButtonTo={ProjectDataService.getUploadsFiles+project.project_release_filename}
             isInApp={false}
             isDownload={true}>
@@ -157,6 +158,7 @@ export default function GetOneProject(props) {
         :
           <ButtonWithBorder 
             ButtonValue = "Link"
+            classname = "item-discover"
             ButtonTo={project.project_release_url}
             isInApp={false}
             isDownload={false}>

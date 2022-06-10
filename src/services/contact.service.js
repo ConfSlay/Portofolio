@@ -7,7 +7,7 @@ const http = axios.create({
 class ContactDataService {
 
   Contact(data) {
-    return http.post("/Contact",data);
+    return http.post("/api/Contact",data);
   }
 
 }
